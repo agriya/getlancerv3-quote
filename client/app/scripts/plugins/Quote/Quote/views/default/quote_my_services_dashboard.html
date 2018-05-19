@@ -1,0 +1,133 @@
+<div class="section" ng-controller="quoteServicesMyServicesDashboardCtrl">
+    <div class="row">
+        <div class="col-md-4 top-mspace">
+            <!--<h3 class="no-mar">{{'My Services'|translate}}</h3>-->
+        </div>
+        <!--   <div class="col-md-8">
+            <ul class="list-inline dashboard-list">
+        <li><a class="btn btn-primary" href="quote_service/add">{{'Post a Service'|translate}}</a></li>
+      </ul>
+        </div>-->
+        <div class="big-mspace text-center">
+            <ul class="list-inline dashboard-list text-center project-lists">
+                <li ng-click="setQuoteServiceStatus('All', 'All')" title="All" ng-class="{active:getStatus == 'All'}" data-class="getStatus">
+                    <span class="badge badge-blue">{{quote_service_count.total_service_count}}</span>
+                    <p class="no-mar">{{'All'|translate}}</p>
+                </li>
+                <li ng-click="setQuoteServiceStatus('Active', 'active')" title="Active" ng-class="{active:getStatus == 'Active'}" data-class="getStatus">
+                    <span class="badge badge-yellow">{{quote_service_count.active_service_count}}</span>
+                    <p class="no-mar">{{'Active'|translate}}</p>
+                </li>
+                <li ng-click="setQuoteServiceStatus('Draft/Disabled', 'draftdisabled')" title="Draft/Inactive" ng-class="{active:getStatus == 'Draft/Disabled'}"
+                    data-class="getStatus">
+                    <span class="badge badge-teal">{{quote_service_count.inactive_service_count}}</span>
+                    <p class="no-mar">{{'Draft/Inactive'|translate}}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12">
+            <div class="table-block table-left-action">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-center">
+                        <thead>
+                            <tr>
+                                <th class="data-left" rowspan="2">{{'Action'|translate}} </th>
+                                <th class="data-left" rowspan="2"> {{'Business Name'|translate}} </th>
+                                <th colspan="3"> {{'About Service'|translate}}</th>
+                                <th colspan="6">{{'Quote Status'|translate}}</th>
+                            </tr>
+                            <tr>
+                                <!--<th> {{'Action'|translate}} </th>-->
+                                <th>{{'Photos'|translate}}</th>
+                                <th>{{'Videos'|translate}}</th>
+                                <th>{{'FAQs'|translate}}</th>
+                                <th>{{'New Requests'|translate}}</th>
+                                <th>{{'Under Discussion'|translate}}</th>
+                                <th>{{'Hired'|translate}}</th>
+                                <th>{{'Completed'|translate}}</th>
+                                <th>{{'Closed'|translate}}</th>
+                                <th>{{'Incomplete'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat='quote_service in quote_services_user'>
+                                <td class="text-center span1">
+                                    <div class="btn-group" uib-dropdown>
+                                        <button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                            <i class="fa fa-cog" aria-hidden="true"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                            <li role="menuitem">
+                                                <a href="user/quote_service/edit/{{quote_service.id}}"> <i class="fa fa-fw fa-pencil-square"> </i> {{'Edit' | translate}} </a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a href="quote_service_photos/{{quote_service.id}}"> <i class="fa fa-fw fa-picture-o"> </i> {{'Manage Photos' | translate}} </a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a href="quote_service_videos/{{quote_service.id}}"> <i class="fa fa-fw fa-file-video-o"> </i> {{'Manage Videos' | translate}}
+                                                    </a>
+                                            </li>
+                                            <li role="menuitem">
+                                                <a href="quote_service_faqs/{{quote_service.id}}"> <i class="fa fa-fw fa-question-circle-o"> </i> {{'Manage FAQs' | translate}}
+                                                    </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="data-left">
+                                    <div class="media">
+                                        <div class="pull-left">
+                                            <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name | slugify}}">
+                                                <img ng-src="{{quote_service.image_name}}" class="img-circle img-responsive user-small" alt="[Image: {{quote_service.business_name}}]"
+                                                    title="{{quote_service.business_name}}"></a>
+
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="quote_service/{{quote_service.id}}/{{(quote_service.business_name).toLowerCase()  | slugify}}">
+                                                <p class="no-mar">{{quote_service.business_name}}</p>
+                                            </a>
+                                            <span class="text-muted text-12"> <i class="fa fa-map-marker" aria-hidden="true"></i> {{quote_service.full_address}}</span>
+                                            <p class="no-mar bottom-mar-5"><span ng-if='quote_service.is_admin_suspend == true' class="label label-danger">{{'Suspended by Admin'|translate}}</span>
+                                                <span ng-if='quote_service.is_active == false' class="label label-info">{{'Draft / Inactive'|translate}}</span>
+                                        </div>
+                                        <!--<span class="text-muted text-12"> <i class="fa fa-map-marker" aria-hidden="true"></i> {{quote_service.full_address}}</span>-->
+
+                                    </div>
+                                </td>
+                                <td> <a href="quote_service_photos/{{quote_service.id}}" title="{{quote_service.quote_service_photo_count}}">{{quote_service.quote_service_photo_count}}</a>                                    </td>
+                                <td> <a href="quote_service_videos/{{quote_service.id}}" title="{{quote_service.quote_service_video_count}}">{{quote_service.quote_service_video_count}}</a>                                    </td>
+                                <td> <a href="quote_service_faqs/{{quote_service.id}}" title="{{quote_service.quote_faq_answer_count}}">{{quote_service.quote_faq_answer_count}}</a>                                    </td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.New}}/new"><span>{{quote_service.quote_bid_new_count}}</span></a></td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.UnderDiscussion}}/under_discussion"><span>{{quote_service.under_discussion_count}}</span></a></td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.Hired}}/hired"><span>{{quote_service.hired_count}}</span></a></td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.Completed}}/completed"><span>{{quote_service.completed_count}}</span></a></td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.Closed}}/closed"><span>{{quote_service.quote_bid_closed_count}}</span></a></td>
+                                <td><a href="my_works/{{quote_service.id}}/{{ConstQuoteStatuses.Closed}}/closed"><span>{{quote_service.quote_bid_not_completed_count}}</span></a></td>
+                            </tr>
+                            <tr ng-if="!quote_services_user.length && !loader" class="text-center">
+                                <td colspan="11" class="text-danger">{{'No records available'|translate}}</td>
+                            </tr>
+                            <tr ng-if="!quote_services_user.length && loader" class="text-center">
+                                <td colspan="11">
+                            <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                        </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="quote_services_user.length" class="big-mspace">
+                        <div class="binding-pagination">
+                            <div class="pagnation-content">
+                                <div class="clearfix pagnation-inner">
+                                    <uib-pagination previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPageService"
+                                        max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"
+                                        items-per-page="itemsPerPage" ng-change="pageChangedService(currentPageService)"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

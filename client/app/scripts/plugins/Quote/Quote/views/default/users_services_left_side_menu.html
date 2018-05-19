@@ -1,0 +1,6 @@
+<ul class="list-unstyled navbar-btn menu-left-sidebar panel">
+    <li ng-class="{active:url_split == 'edit'}" data-class="tabType"> <a href="user/quote_service/edit/{{quoteServiceId}}"><i class="fa fa-fw fa-pencil-square"></i> {{'Edit Service'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'quote_service_faqs'}"> <a href="quote_service_faqs/{{quoteServiceId}}"><i class="fa fa-fw fa-question-circle-o"></i> {{'FAQs'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'quote_service_photos'}"> <a href="quote_service_photos/{{quoteServiceId}}"><i class="fa fa-fw fa-picture-o"></i> {{'Photos'|translate}}</a></li>
+    <li ng-class="{active:url_split == 'quote_service_videos'}"> <a href="quote_service_videos/{{quoteServiceId}}"><i class="fa fa-fw fa-file-video-o"></i> {{'Videos'|translate}}</a></li>
+</ul>

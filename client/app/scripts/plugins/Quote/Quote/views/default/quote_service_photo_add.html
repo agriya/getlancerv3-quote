@@ -1,0 +1,44 @@
+<div class="modal-content clearfix">
+    <div class="modal-header"><button type="button" class="close" ng-click="ok()">x</button>
+        <h3 class='top-mar'>{{'Add Service Photo' | translate}}</h3>
+    </div>
+    <div class="col-xs-12 top-mar">
+        <div class="alert alert-info text-center no-mar">
+            <span> {{'It Will Display for Users in Your Service Page'|translate}}. </span>
+        </div>
+    </div>
+    <div class="modal-body col-xs-12" ng-controller="QuoteServicePhotosManageController">
+        <form name="myForm" ng-submit="uploadFile(myForm.$valid);" enctype="multipart/form-data" novalidate>
+            <div class="form-group">
+                <label for="inputTaskAttachments">{{'Photos' | translate}}</label>
+                <div class="fileinput-button">
+                    <input type="file" ngf-select ng-model="file" name="file" ng-change="uploadServicePhotos(file)" placeholder="{{'Photos' | translate}}"
+                        accept="image/*" ng-required="true">
+                    <i class="fa fa-upload fa-fw" aria-hidden="true"></i> {{'Upload File'|translate}}
+                </div>
+                
+                <span class="error" ng-show="(myForm.$submitted || myForm.file.$touched) && (myForm.file.$pristine || myForm.file.$invalid) && (myForm.file.$error.required)">{{'Required'| translate}} </span>
+                 <span class="error" ng-if="error_message && error_message !== ''">
+                                            {{error_message}}</span>
+                <div class="grayc help-block">
+                    <p ng-if='$root.settings.MAX_UPLOAD_SIZE_OF_SERVICE_PHOTO'>
+                        <small>{{'Maximum allowed size:'|translate}} 
+                                            {{$root.settings.MAX_UPLOAD_SIZE_OF_SERVICE_PHOTO}} {{'MB'|translate}}</small>
+                    </p>
+                    <p ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_SERVICE_PHOTO'><small>{{'Allowed extensions:'|translate}} 
+                                            {{$root.settings.ALLOWED_EXTENSIONS_OF_SERVICE_PHOTO}}</small>
+                    </p>
+                   
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="caption">{{'Caption' | translate}}</label>
+                <input ng-model="caption" type="text" class="form-control" id="caption" placeholder="{{'Caption' | translate}}" name="caption"
+                    ng-required="true">
+                <span class="error" ng-show="(myForm.$submitted || myForm.caption.$touched) && (myForm.caption.$pristine || myForm.caption.$invalid) && (myForm.caption.$error.required)">{{'Required'| translate}} </span>
+            </div>
+            <button ng-show="photo_btn" class="btn btn-textb btn-primary" disabled><span> <i class="fa fa-spinner fa-pulse fa-lg"></i> </span> {{'Submit'|translate}}</button>
+            <button type="submit" class="btn btn-textb btn-primary" ng-show="!photo_btn">{{'Submit' | translate}}</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,514 @@
+<!-- BEGIN: MAIN -->
+<div id="listing-page" class="listing-page">
+    <div class="main">
+        <div class="well no-mar quote-myrequest">
+            <div class="container">
+                <!-- START:Menu -->
+                <div class="menu clearfix navbar-btn">
+                    <ul class="breadcrumb navbar-btn panel">
+                        <li> <a href="users/dashboard?type=requests&status=all">{{'Home'|translate}}</a> </li>
+                        <li class="active">{{'My Requests'|translate}}</li>
+                    </ul>
+                    <div class="pull-left">
+                        <ul ng-if="!quote_type" class="list-inline navbar-btn open-list">
+                            <li ng-class="{active: status == ConstQuoteStatuses.UnderDiscussion}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.UnderDiscussion}}/under_discussion" title="{{'Under Discussion'|translate}}" class="text-muted text-13">{{'New / Under Discussion'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.Hired}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Hired}}/hired" title="{{'Hired'|translate}}" class="text-muted text-13">{{'Hired'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.Completed}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Completed}}/completed" title="{{'Completed'|translate}}" class="text-muted text-13">{{'Completed'|translate}}</a>
+                            </li>
+                             <li ng-class="{active: status == ConstQuoteStatuses.Closed}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Closed}}/closed" title="{{'Closed'|translate}}" class="text-muted text-13">{{'Closed'|translate}}</a>
+                            </li>
+                        </ul>
+                        <ul ng-if="quote_type" class="list-inline navbar-btn open-list">
+                            <li ng-class="{active: status == 0}"> 
+                                <a href="quote_bids/my_requests/{{requestorId}}?type=sales" title="{{'Active'|translate}}" class="text-muted text-13">{{'Active'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.UnderDiscussion}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.UnderDiscussion}}/under_discussion?type=sales" title="{{'Under Discussion'|translate}}" class="text-muted text-13">{{'Under Discussion'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.Hired}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Hired}}/hired?type=sales" title="{{'Hired'|translate}}" class="text-muted text-13">{{'Hired'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.Completed}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Completed}}/completed?type=sales" title="{{'Service Sent'|translate}}" class="text-muted text-13">{{'Service Sent'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.Closed}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.Closed}}/closed?type=sales" title="{{'Closed'|translate}}" class="text-muted text-13">{{'Closed'|translate}}</a>
+                            </li>
+                            <li ng-class="{active: status == ConstQuoteStatuses.NotInterested}">
+                                <a href="quote_bids/my_requests/{{requestorId}}/{{ConstQuoteStatuses.NotInterested}}/not_interested?type=sales" title="{{'Ignore this Request'|translate}}" class="text-muted text-13">{{'Ignore this Request'|translate}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pull-right float-none-xs">  
+                   <!--     <div class="frm-select cursor">
+                        <select class="form-control cursor" ng-model="data.id" ng-change="searchRequest()">
+                            <option value=""> {{'Choose Your Request'|translate}} </option>
+                            <option value="all"> {{'All My Requests'|translate}} </option>
+                            <option value="{{myRequest.id}}" ng-repeat="myRequest in myRequests"> 
+                                {{myRequest.title}} 
+                            </option>
+                        </select>
+                        </div>-->
+                       <!-- <div class="dropdown options-dropdown">
+                            <a href="" title="{{'All request'|translate}}" class="btn btn-default btn-block Montserrat btn-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                <span class="clearfix">
+                                    <span class="pull-left">
+                                       {{'All request'|translate}}
+                                        </span> 
+                                        <span class="pull-right"> 
+                                          <i class="fa fa-angle-down"></i>
+                                    </span> 
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu Montserrat">
+                            <li ng-repeat="myRequest in myRequests"> 
+                            <a href="" ng-click="searchRequest(myRequest.id)" ng-model="myRequest.id">{{myRequest.title}}</a>
+                           </li>                    
+                        </ul>
+                        </div>-->
+                        <div class="dropdown" ng-if="myRequests.length !== 0">
+                            <a data-toggle="dropdown" class="btn btn-default">
+                                <span class="pull-left" ng-show="!request_filter">{{'Choose Your Request'|translate}}</span>
+                                <span ng-show="request_filter">{{request_filter.title}}</span>
+                                <span class="pull-right"> <i class="fa fa-angle-down text-muted"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="searchRequest('all','All')">{{'Active Requests'|translate}} </a>
+                                </li>
+                                <li><a ng-click="searchRequest(myRequest.id,'current')" ng-repeat="myRequest in myRequests">{{myRequest.title}}</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a href="service_category" title="{{'Request a Service'|translate}}" class="btn btn-primary">{{'Request a Service'|translate}}</a>
+                    </div>
+                </div>
+                <!-- END: Menu -->
+                <div class="row">
+                    <div class="col-md-5 col-lg-4 left-width">
+                        <!-- START: Left Menu -->
+                        <div class="left-menu clearfix">
+                            <ul class="list-unstyled nav lease-list" role="tablist">
+                                <li class="active">
+                                    <form class="search-frm">
+                                        <div class="form-group has-feedback no-mar"> 
+                                            <label for="search" class="control-label sr-only">{{'Search' | translate}}</label> 
+                                            <input ng-model="my_request_search" type="text" id="search" class="form-control" placeholder="{{'Search' | translate}}"> 
+                                            <span class="form-control-feedback"><i class="fa fa-search"></i></span>                                            
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                            <ul custom-scroll class="list-unstyled panel lease-list"> 
+                                <li ng-repeat="quote_request_view in quote_request_views | filter:my_request_search" ng-class="{active: quote_request_view.id == quote_request_views_detail.id}">
+                                    <span class="unread_message"> 
+                                    <!-- <span ng-if="!quote_request_view.is_requestor_readed" class="label label-info">{{'Unread'| translate}}</span>-->
+                                        <a ng-click="getBidDetail(quote_request_view.id)" class="media show text-muted">
+                                            <span class="pull-left">
+                                                <img ng-src="{{quote_request_view.image_name}}" alt="{{quote_request_view.user.username}}" title="{{quote_request_view.user.username}}" class="img-circle">                                         
+                                            </span> 
+                                            <span class="media-body">
+                                                <span class="show no-mar clearfix">
+                                                    <span class="pull-left">
+                                                        <span class="show fontw-600" title="{{quote_request_view.quote_request.title}}">
+                                                            <span class="h-truncate task-title">{{quote_request_view.quote_request.title}}</span> 
+                                                        </span> 
+                                                        <span class="no-mar h6 text-11 h-truncate" ng-if="quote_request_view.quote_status_id == ConstQuoteStatuses.New">
+                                                            <i class="fa fa-map-marker"></i>
+                                                            {{quote_request_view.quote_service.city.name}}
+                                                        </span> 
+<span class="no-mar h6 text-11 h-truncate" ng-if="quote_request_view.quote_status_id != ConstQuoteStatuses.New">
+<i class="fa fa-map-marker"></i>
+{{quote_request_view.quote_service.full_address}}</span>
+<span class="no-mar text-11 show"> 
+    <span class="text-b">{{quote_request_view.requestor_received_message_count}} {{'Conversation' | translate}} </span>
+    <span class="greenc text-14 notification" ng-if="!quote_request_view.is_requestor_readed"><i class="fa fa-envelope-o text-12"></i></span> 
+</span>
+</span> 
+                                                    <span class="pull-right search-right">
+                                                        <span class="show text-18 Montserrat txt-black">
+                                                            <amount-display  amount='{{quote_request_view.quote_amount}}' ng-if="quote_request_view.quote_amount"></amount-display> 
+                                                            <span class="grayc" ng-if="quote_request_view.quote_type == 2">/{{'Hour'| translate}}</span> 
+                                                            </span>     
+<span ng-if="quote_request_view.quote_status_id == ConstQuoteStatuses.UnderDiscussion" ng-click="setHired(quote_request_view.id)" title="{{'Hire'|translate}}" class="label label-warning label-truncate">{{'Hire'|translate}}</span>  
+                                                        <span ng-if="quote_type && quote_request_view.quote_status_id == ConstQuoteStatuses.Completed"
+                                                        title="{{'Service Sent'|translate}}" class="btn btn-warning btn-xs label-truncate">{{'Service Sent'|translate}}</span> 
+                                                        <span ng-if="quote_type && quote_request_view.quote_status_id == ConstQuoteStatuses.closed" title="{{'Closed'|translate}}"
+                                                        class="btn btn-warning btn-xs label-truncate">{{'Closed'|translate}}</span> 
+                                                        <span ng-if="quote_request_view.quote_status_id == ConstQuoteStatuses.Hired" title="{{'Hired'|translate}}" class="label label-info label-truncate">{{'Hired'|translate}}</span> 
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </a>
+                                    </span>
+                                    <hr class="no-mar"> 
+                                </li>
+                                <li ng-if="(quote_request_views | filter:my_request_search).length == 0" class="space text-danger" ng-show="!loader">{{'No records available' | translate}} </li>
+                                <li ng-if="quote_request_views.length" class="active">
+                                    <div class="form-group has-feedback no-mar">
+                                        <p class="text-center no-mar">
+                                            <button class="btn btn-default btn-primary btn-sm load-more" ng-hide="noOfPagesRequest == loadPage" ng-click='request_pagination()'>{{'Load more...' | translate}}</button> 
+                                        </p>
+                                    </div>
+                                </li>
+                                <li ng-if="!quote_request_views.length" class="active">
+                                    <div class="form-group has-feedback no-mar">
+                                        <p class="text-center" ng-show="loader"> {{'Loading..' | translate}} </p>
+                                        <!--<p class="text-center text-danger" ng-show="!loader"> {{'No records available' | translate}} </p>-->
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- STOP: Left Menu -->
+                    </div>
+                    <div class="col-md-7 col-lg-8 right-width">
+                        <!-- BEGIN:Right Side -->
+                        <div class="panel tab-content builtrip-blk">
+                            <!-- tab pane first start-->
+                            <div class="tab-pane active" id="first" ng-if="quote_request_views_detail">
+                                <div class="tab-section well-sm builtin-blk">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h3 class="lead list-group-item-text no-mar head-bot">{{quote_request_views_detail.quote_service.business_name}}</h3>
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <a href="users/{{quote_request_views_detail.service_provider_user.id}}/{{quote_request_views_detail.service_provider_user.username}}"> 
+                                                        <img ng-src="{{quote_request_views_detail.image_name}}" class="img-circle" alt="{{quote_request_views_detail.service_provider_user.username}}" target="_black">
+                                                    </a> 
+                                                </div>
+                                                <div class="media-body media-middle" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                                    <p class="no-mar text-16"> {{'Posted by'|translate}} 
+                                                        <a href="users/{{quote_request_views_detail.service_provider_user.id}}/{{quote_request_views_detail.service_provider_user.username}}" title="{{quote_request_views_detail.service_provider_user.username}}" target="_blank" class="txt-black">{{quote_request_views_detail.service_provider_user.username}}</a> 
+                                                        <p class="text-12 text-muted">{{quote_request_views_detail.created_at | timeago}}</p>
+                                                    </p>
+                                                    <ul class="list-inline no-mar" ng-init="rating = quote_request_views_detail.user.review_count_as_freelancer" ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Bidding/BiddingReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Contest/ContestReview') > -1 || settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                                        <li>
+                                                            <span class="label label-default">{{quote_request_views_detail.user.review_count_as_freelancer|number:1}}</span>
+                                                        </li>
+                                                        <li class="text-primary"> 
+                                                            <span class="myrating" uib-rating ng-model="rating" max="5" read-only="true" state-on="'fa fa-star fa-lg'" state-off="'fa fa-star-o fa-lg'"></span> 
+                                                        </li>
+                                                        </li>
+                                                         <li>({{quote_request_views_detail.user.review_count_as_freelancer}} 
+                                                            {{'Reviews'|translate}})
+                                                        </li>
+                                                         <quote_user_flag></quote_user_flag>
+                                                    </ul>
+                                                    
+                                                   
+                                                    <!-- <ul class="list-inline user-social">
+                                                        <li><a href="#" title="envelope"><span class="fa-stack fa-lg">
+                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                            <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                                        </span></a></li>
+                                                        <li><a href="#" title="user"><span class="fa-stack fa-lg">
+                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                            <i class="fa fa-user fa-stack-1x fa-inverse"></i>
+                                                        </span></a></li>
+                                                        <li><a href="#" title="phone"><span class="fa-stack fa-lg">
+                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                            <i class="fa fa-phone fa-stack-1x fa-inverse"></i>
+                                                        </span></a></li>
+                                                        <li><a href="#" title="credit-card"><span class="fa-stack fa-lg">
+                                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                                            <i class="fa fa-credit-card fa-stack-1x fa-inverse"></i>
+                                                        </span></a></li>
+                                                    </ul>-->
+                                                </div>
+                                            </div>
+                                            <ul class="nav nav-pills text-uppercase ver-mspace15 ripout-tab">
+                                                <li class="active">
+                                                    <a title="{{'Request posted by'|translate}} {{quote_request_views_detail.service_provider_user.username}}" class="text-center txt-black">{{'Open'|translate}}
+                                                    </a>
+                                                        <span class="show text-10 Montserrat text-muted top-mar-5">{{quote_request_views_detail.created_at | timeago}}</span>
+                                                </li>
+                                                <li ng-if="quote_request_views_detail.quote_status_id < ConstQuoteStatuses.Hired">
+                                                <a title="{{'Hired'|translate}}" class="text-center">{{'Hired'|translate}}
+                                                    </a>
+                                                </li>
+                                                <li ng-class="{'active':quote_request_views_detail.hired_on}" ng-if="quote_request_views_detail.quote_status_id >= ConstQuoteStatuses.Hired">
+                                                    <a title="{{quote_request_views_detail.service_provider_user.username}} {{'hired by'|translate}} {{quote_request_views_detail.user.username}}" class="text-center">{{'Hired'|translate}} 
+                                                    </a>
+                                                        <span ng-if="quote_request_views_detail.hired_on" class="show text-10 Montserrat text-muted top-mar-5">{{quote_request_views_detail.hired_on | timeago}} </span>
+                                                </li>
+                                                <li ng-if="quote_request_views_detail.quote_status_id < ConstQuoteStatuses.Completed">
+                                                <a title="{{'Completed'|translate}}" class="text-center">{{'Completed'|translate}}
+                                                    </a>
+                                                </li>
+                                                <li ng-class="{'active':quote_request_views_detail.completed_on}" ng-if="quote_request_views_detail.quote_status_id >= ConstQuoteStatuses.Completed">
+                                                    <a title="{{quote_request_views_detail.service_provider_user.username}} {{'marked as completed this work'| translate}}" class="text-center">{{'Completed'|translate}}
+                                                    </a>
+                                                        <span ng-if="quote_request_views_detail.completed_on"  class="show text-10 Montserrat text-muted top-mar-5">{{quote_request_views_detail.completed_on | timeago}}</span> 
+                                                </li>
+                                                <li ng-if="quote_request_views_detail.quote_status_id != ConstQuoteStatuses.Closed && quote_request_views_detail.quote_status_id != ConstQuoteStatuses.NotCompleted">
+                                                <a title="{{'Closed'|translate}}" class="text-center">{{'Closed'|translate}}
+                                                    </a>
+                                                </li>
+                                                 <li ng-class="{'active':quote_request_views_detail.closed_on}" ng-if="quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Closed">
+                                                    <a title="{{quote_request_views_detail.service_provider_user.username}} {{'accepted work completion'|translate}}" class="text-center">{{'Closed'|translate}}
+                                                    </a>
+                                                        <span ng-if="quote_request_views_detail.closed_on"  class="show text-10 Montserrat text-muted top-mar-5">{{quote_request_views_detail.closed_on | timeago}}</span> 
+                                                </li>
+                                                 <li ng-class="{'active':quote_request_views_detail.closed_on}" ng-if="quote_request_views_detail.quote_status_id == ConstQuoteStatuses.NotCompleted">
+                                                    <a title="{{quote_request_views_detail.user.username}} {{'reject the the work completion'|translate}}" class="text-center non-completed">{{'Closed as InCompleted'|translate}}
+                                                    </a>
+                                                        <span ng-if="quote_request_views_detail.closed_on"  class="show text-10 Montserrat text-muted top-mar-5">{{quote_request_views_detail.closed_on | timeago}}</span> 
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 my-works-amount">
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-12">
+                                                    <div class="quote" ng-if="quote_request_views_detail.quote_amount">
+                                                        <div class="panel panel-info text-center">
+                                                            <div class="panel-heading clearfix">
+                                                                <p class="pull-left no-mar fa-inverse">{{'Quote Amount'|translate}}</p> 
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <p class="h3 no-mar Montserrat bot-space-10">
+                                                                    
+                                                                    <amount-display  amount='{{quote_request_views_detail.quote_amount}}' ng-if="quote_request_views_detail.quote_amount"></amount-display> 
+                                                                    <span ng-if="quote_request_views_detail.quote_type == 2">/{{'Hour'|translate}}</span> 
+                                                                </p>
+                                                            </div>
+                                                            <div class="right-side-form"> 
+                                                                <button ng-if="quote_request_views_detail.quote_status_id == ConstQuoteStatuses.UnderDiscussion" class="btn btn-primary btn-block text-14" type="button" ng-click="setHired(quote_request_views_detail.id)">{{'Under Discussion'|translate}}</button>                                                            
+                                                                <button ng-if="quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Hired" class="btn btn-primary btn-block text-16" type="button">{{'Hired'|translate}}</button> 
+                                                                <button ng-if="!quote_type && quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Completed"
+                                                                class="btn btn-primary btn-block text-16" type="button">{{'Completed'|translate}}</button> 
+                                                                <button ng-if="quote_type && quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Completed"
+                                                                class="btn btn-primary btn-block text-16" type="button">{{'Service Sent '|translate}}</button> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6 col-md-12">
+                                                    <div class="dropdown options-dropdown">
+                                                        <a href="" title="{{'More Options'|translate}}" class="btn btn-default btn-block Montserrat btn-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                                            <span class="clearfix">
+                                                                <span class="pull-left">
+                                                                    {{'More Options'|translate}}
+                                                                </span> 
+                                                                <span class="pull-right"> 
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </span> 
+                                                            </span>
+                                                        </a>
+                                                        <ul class="dropdown-menu Montserrat">
+                                                            <li> 
+                                                                <a href="" ng-click="scroll_to('contact_freelancer')">{{'Contact Service Pro'|translate}}</a>
+                                                            </li>
+                                                            <li ng-if="quote_request_views_photos.length || quote_request_views_videos.length || quote_request_views_audios.length">
+                                                                <a href="" ng-click="scroll_to('service_media')">{{'Service Media'|translate}}</a>
+                                                            </li>
+                                                            <li ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1 && quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Completed">
+                                                                <a href="" ng-click="openAddRequestReview('Completed')">{{'Accept as Completed'|translate}}</a>
+                                                            </li>
+                                                            <li ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1 && (quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Closed || quote_request_views_detail.quote_status_id == ConstQuoteStatuses.NotCompleted)">
+                                                                <a href="" ng-click="scroll_to('reviews')">{{'Update Review'|translate}}</a>
+                                                            </li>
+                                                             <li ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1 && quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Completed">
+                                                                <a href="" ng-click="openAddRequestReview('NotCompleted')">{{'No'|translate}}, {{'Work Not Completed'|translate}}</a>
+                                                            </li>
+															<li>
+                                                                    <a href="" ng-click="scroll_to('activities')">{{'Activities'|translate}}</a>
+                                                                </li>
+                                                            <li ng-if="quote_request_views_detail.quote_status_id == ConstQuoteStatuses.UnderDiscussion"> 
+                                                                <a href="" ng-click="setHired(quote_request_views_detail.id)">{{'Hire this Service'|translate}}</a>
+                                                            </li>
+                                                            <li ng-if="quote_request_views_detail.quote_request.is_request_for_buy && quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Hired && quote_request_views_detail.is_paid_to_escrow  == ConstPayToEscrow.NotPaid">
+                                                                <a href="" ng-click="makePayment(quote_request_views_detail)">{{'Pay Amount to Escrow'|translate}}</a>
+                                                            </li>
+                                                            <li ng-if="quote_request_views_detail.quote_request.is_request_for_buy &&  quote_request_views_detail.quote_status_id == ConstQuoteStatuses.Completed && quote_request_views_detail.is_paid_to_escrow">
+                                                                <a href="" ng-click="setAsClosed(quote_request_views_detail.id)">{{'Close'|translate}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            <div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <!-- Description details -->
+                                    <div class="About Service" ng-if="quote_request_views_detail.quote_service.how_does_your_service_stand_out">
+                                        <h4 class="top-mspace-10"> {{'About Service'|translate}}</h5>
+                                        <div class="text-muted h6 lin-heig22">
+                                            <show-more text="quote_request_views_detail.quote_service.how_does_your_service_stand_out" limit="150"></show-more>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                    <div ng-if="quote_request_views_detail.quote_service.how_does_your_service_stand_out">
+                                        <h5 class="text-muted"> {{'How Does Your Service Stand Out'|translate}} ? </h5>
+                                        <div class="text-muted h6 lin-heig22">
+                                            <p>{{quote_request_views_detail.quote_service.how_does_your_service_stand_out}}</p>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                    <div ng-if="quote_request_views_detail.quote_service.what_do_you_enjoy_about_the_work_you_do">
+                                        <h5 class="text-muted"> {{'What Do You Enjoy About The Work You Do'|translate}} ? </h5>
+                                        <div class="text-muted h6 lin-heig22">
+                                            <p>{{quote_request_views_detail.quote_service.what_do_you_enjoy_about_the_work_you_do}}</p>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                    <!-- service photos-->
+                                    <div class="clearfix medias">
+                                        <div id="service_media" ng-if="quote_request_views_photos.length || quote_request_views_videos.length || quote_request_views_audios.length">
+                                            <h4 class="bot-space-10">{{'media'| translate}}</h4>
+                                            <ul class="list-inline request-media clearfix">
+                                                <li class="col-sm-4 col-xs-6" ng-if="quote_request_views_photos.length" ng-repeat="quote_service_photo in quote_request_views_photos"> 
+                                                    <div class="photographers-image portfolio-index">
+                                                        <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                                                            <div class="img-edit-block">
+                                                                <div class="center-block show feutrimgCont">
+                                                                    <img ng-repeat="imagename in quote_service_photo.attachment" ng-src="{{imagename.image_name}}" alt="{{quote_service_photo.caption}}" title="{{quote_service_photo.caption}}" alt="[Image: list-img-1]" title="list-img-1" class="img-responsive center-block">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="my-request-video col-sm-4 col-xs-6" ng-if="quote_request_views_videos.length" ng-repeat="quote_request_views_video in quote_request_views_videos">
+                                                    <div class="portfolio-index">
+                                                        <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                                                            <div class="img-edit-block">
+                                                                <div class="center-block show feutrimgCont">
+                                                                    <span bind-html-compile="quote_request_views_video.embed_code"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="my-request-video col-sm-4 col-xs-6" ng-if="quote_request_views_audios.length" ng-repeat="quote_request_views_audio in quote_request_views_audios"> 
+                                                    <div class="portfolio-index">
+                                                        <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                                                            <div class="img-edit-block">
+                                                                <div class="center-block show feutrimgCont">
+                                                                    <span bind-html-compile="quote_request_views_audio.embed_code"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <hr> 
+                                        </div>
+                                    </div>
+                                    <div ng-if="quote_request_views_faqs.length">
+                                        <h4 class="text-22"> {{'FAQs'|translate}}</h4>
+                                        <ul class="list-unstyled clearfix faq h6" ng-repeat="faq_ans in quote_request_views_faqs">
+                                            <li ng-repeat="faq in faq_ans">
+                                                <h5><span class="text-primary"><i class="fa fa-angle-right fa-fw fa-lg"></i></span>{{faq.question}}</h5>
+                                                <p> {{faq.answer}} </p>
+                                            </li>
+                                        </ul>
+                                        <hr> 
+                                    </div>
+                                    <div>
+                                        <h4 class="text-22"> {{'Service Location'|translate}}</h4>
+                                        <p class="bot-space-10"><span><i class="fa fa-map-marker fa-fw"></i></span>{{quote_request_views_detail.quote_service.full_address}}</p>
+                                        <!-- BEGIN : Google Map -->
+                                        <div class="google-map">
+                                            <div>
+                                                <ng-map center="{{quote_request_views_detail.quote_service.latitude}},{{quote_request_views_detail.quote_service.longitude}}">
+                                                <marker position="{{quote_request_views_detail.quote_service.latitude}},{{quote_request_views_detail.quote_service.longitude}}"></marker>
+                                                    <shape name="circle" no-watcher="true"
+                                                                    stroke-color="#91A93A"
+                                                                    stroke-opacity="0.8"
+                                                                    stroke-weight="0.2"
+                                                                    fill-color="#91A93A"
+                                                                    fill-opacity="0.35"
+                                                                    center="{{quote_request_views_detail.quote_service.latitude}},{{quote_request_views_detail.quote_service.longitude}}"
+                                                                    radius="200">
+                                                    </shape>
+                                                </ng-map>
+                                            </div>
+                                        </div>
+                                        <hr> 
+                                    </div>
+                                    <div ng-if="$root.settings.SITE_ENABLED_PLUGINS.indexOf('Quote/QuoteReview') > -1">
+                                    <quote_review_my_request quote-details="{{quote_request_views_detail}}" quote-id="{{quote_request_views_detail.quote_service_id}}" bid-id="{{quote_request_views_detail.id}}" quoteuser-id="{{quote_request_views_detail.service_provider_user.id}}" id="reviews"></quote_review_my_request></div>
+                                    <div id="contact_freelancer" class="lin-heig22 h6">
+                                        <h4> {{'Message'|translate}}</h4>
+                                         <ul class="list-unstyled builtin-list">
+                                            <li ng-if="quote_request_views_messages.length > 0"> 
+                                                <a href="" class="btn btn-default pull-right btn-sm load-more" ng-hide="messageNoOfPages == MessagePage"
+                                                ng-click='request_message_pagination()'>{{'Load more...' | translate}}  ( {{messageTotal}} )</a> 
+                                            </li>
+                                        </ul>
+                                        <div ng-if="quote_request_views_messages">
+                                        <div class="media" ng-if="quote_request_views_messages.length" ng-repeat="quote_request_views_message in quote_request_views_messages | reverse">
+                                            <div class="pull-left">
+                                                <a href="users/{{quote_request_views_message.user.id}}/{{quote_request_views_message.user.username}}">
+                                                    <img ng-src="{{quote_request_views_message.image_name}}" alt="{{quote_request_views_messages.user.username}}" class="img-circle user-small" target="_black">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <p class="no-mar"> 
+                                                    <a href="users/{{quote_request_views_message.user.id}}/{{quote_request_views_message.user.username}}" class="text-info" target="_black">{{quote_request_views_message.user.username}}</a> 
+                                                    <small class="ver-lft-space5" >
+                                                     {{quote_request_views_message.message_content.created_at | timeago}}
+                                                    </small> 
+                                                </p>
+                                                <p>{{quote_request_views_message.message_content.message}} </p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="media">
+                                            <div class="pull-left">
+                                                <img ng-src="images/default.png" class="img-circle user-small">
+                                            </div>
+                                            <div class="media-body">
+                                                <form ng-submit="addRequestMessages(messages.$valid, messages)" name="messages" novalidate>
+                                                    <div class="form-group"> 
+                                                        <label for="comments" class="sr-only"> {{'Message'|translate}}</label> 
+                                                        <textarea id="comments" ng-model="conversation.message" class="form-control"  placeholder="{{'Ask a question about this task'|translate}}"
+                                                        rows="3"  name="conversion" ng-required="true"></textarea>
+                                                        <span class="error" ng-show="(messages.$submitted || messages.conversion.$touched) && (messages.conversion.$pristine || messages.conversion.$invalid) && (messages.conversion.$error.required)"> {{'Required'| translate }} </span> 
+                                                    </div>
+                                                    <div class="clearfix">
+                                                        <div class="pull-right float-none-sm">
+                                                            <ul class="list-inline">
+                                                                <!-- <li class="pull-left">
+                                                                    <a href="#" title="attach file" class="btn btn-default btn-attach Montserrat bor-radi24"> <span class="text-13">attach file</span> </a>
+                                                                </li>-->
+                                                                <li>
+                                                              <!--  <button class="btn btn-primary btn-send" name="message_send" type="submit" ng-if="button_save_btn" class="btn btn-primary" disabled>{{'Send'|translate}}</button>-->
+                                                                <button class="btn btn-primary btn-send" name="message_send" type="submit" ng-if="!button_save_btn" class="btn btn-primary">{{'Send'|translate}} </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+										<quote_activities quote-id="{{quote_request_views_detail.quote_service_id}}" bid-id="{{quote_request_views_detail.id}}"></quote_activities>
+                                    </div>
+                                    <!-- END:Rightside -->
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div ng-if="!quote_request_views.length && !loader" class="active panel">
+                    <h3 class="text-center text-18 no-mar space" class="top-msapce">
+                      <p class="no-mar" ng-if="myRequests.length !== 0">{{'Quotes are on the way. Service provider will contact you soon.'|translate}}</p>
+                       <p class="no-mar" ng-if="myRequests.length == '0'"> {{'No quote requests available'|translate}}. </p>
+                    </h3>
+                </div>
+                <div ng-if="!quote_request_views.length && loader" class="text-center active panel"> 
+                    <span class="top-mspace">
+                        <img ng-src="images/contest_loader.gif" alt="loading" title="loading">
+                    </span> 
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: MAIN -->

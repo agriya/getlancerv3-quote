@@ -1,0 +1,67 @@
+<section class="portfolio-lists photo-view" ng-controller="quoteMyServicesCtrl">
+    <div class="container">
+        <div class="bot-space" ng-show="isAuth">
+            <h3 class="text-center bot-mar-25">{{'My Services'| translate }} </h3>
+        </div>
+        <div class="container">
+            <div class="row hire-block portfolios-category" ng-repeat="quote_service in quote_services_user">
+                <div class="col-sm-6 col-md-3 col-xs-6 photographers-image quote-my-service" ng-repeat="quote_service in  quote_service">
+                    <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                        <div class="pr">
+                            <div class="img-edit-block pr">
+                                <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name  | slugify}}" class="center-block show feutrimgCont"> 
+                                    <img ng-src="{{quote_service.image_name}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}" class="img-responsive center-block">
+                                </a>
+                                <div class="edit-icon-align">
+                                    <ul class="list-inline navbar-btn text-center">
+                                        <!--<li ng-show="isAuth && quote_service.user.id === user.id" class="cursor">
+                                            <a href="user/quote_service/edit/{{quote_service.id}}" class=""><i class="fa fa-pencil right-sspace" aria-hidden="true" title="Edit"></i></a>
+                                        </li>-->
+                                        <li ng-show="isAuth" class="cursor">
+                                            <a href=""><i class="fa fa-trash-o text-18" aria-hidden="true" title="Delete" ng-click="deleteService(quote_service.id)"></i></a>
+                                        </li>
+                                        <li class="cursor">
+                                            <a href="user/quote_service/edit/{{quote_service.id}}"> <i class="fa fa-cog text-18"></i>
+                                            </a>
+                                            <!--<ul class="dropdown-menu dropdown-arrow dropdown-arrow-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                                <li role="menuitem">
+                                                    <a href="quote_service_photos/{{quote_service.id}}"> {{'Photos' | translate}} </a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a href="quote_service_videos/{{quote_service.id}}"> {{'Videos' | translate}} </a>
+                                                </li>
+                                                <li role="menuitem">
+                                                    <a href="quote_service_faqs/{{quote_service.id}}"> {{'FAQs' | translate}} </a>
+                                                </li>
+                                            </ul>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="row" ng-show="!quote_services_user.length && !loader">
+                <div class="col-xs-12">
+                    <p class="text-center text-danger">{{'No records available'| translate }}</p>
+                </div>
+            </div>
+            <div ng-show="!quote_services_user.length && loader"> <img src="images/Loading_icon.gif" class="img-responsive center-block" id="loading"> </div>
+             <div class="row binding-pagination" ng-if="quote_services_user.length">
+                <div class="pagnation-content">
+                    <div class="container">
+                        <div class="clearfix pagnation-inner">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPages" class="pagination-sm" boundary-links="true" num-pages="numPages" num-pages="noOfPages" ng-click="paginate()"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <!-- <div class="col-xs-12 text-center ver-mspace30" ng-hide="lastpage == currentpage || !quote_services_user.length"> <a title="See more portfolio" class="btn btn-primary btn-catergory text-uppercase" ng-click="loadMore()">{{'See more Services' | translate }}</a>                </div>-->
+        </div>
+    </div>
+</section>

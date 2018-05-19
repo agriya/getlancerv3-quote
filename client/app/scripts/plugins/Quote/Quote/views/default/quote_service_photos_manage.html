@@ -1,0 +1,83 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="users/dashboard?type=my_service_active&status=all">{{'Home'|translate}}</a> </li>
+                    <!--<li> <a href="quote_service/my_services">{{'My Services'|translate}}</a> </li>-->
+                    <li> <a href="user/quote_service/edit/{{quoteServiceId}}">{{business_name}}</a> </li>
+                    <li class="active"> {{'Photos'|translate}} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-controller='QuoteServicePhotosManageController'>
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'scripts/plugins/Quote/Quote/views/default/users_services_left_side_menu.html'"></div>
+            </div>
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="" ng-if="quote_active === false">
+                    <div class="alert alert-warning quote-alert">
+                        <span>{{'This service listing is in draft mode'|translate}}.</span>
+                        <button class="btn gradi-rnd-btn btn-primary pull-right" ng-click="setQuoteActive()"><i class="fa fa-check right-space"></i>{{"I'm done all update and publish this now"|translate}}</button>
+                    </div>
+                </div>
+                <div class="navbar-default clearfix space bot-20-mar" ng-show="!loader">
+                    <div classs="panel service-lists">
+                        <div class="panel-heading sep-bot clearfix">
+                           
+                            <div class="pull-left">
+                                <h3 class="no-mar">{{business_name}} - {{'Photos'|translate}} </h3>
+                            </div>
+                            <a class="pull-right btn btn-primary text-uppercase" title="{{'Add' | translate}}" href="" ng-click='QuotePhotoAdd(quoteServiceId)'>
+                            <i class="fa fa-plus"></i> {{'Add'|translate}} </a>
+                        </div>
+                        <div class="">
+                            <div class="row">
+                                <div class="col-sm-4 bot-mar-25 top-mar-20" ng-if="quote_service_photos.length > 0" ng-repeat='quote_service_photo in quote_service_photos'>
+                                    <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+                                        <div class="pr" ng-repeat="imagename in quote_service_photo.attachment">
+                                            <div class="img-edit-block pr">
+                                                <a href="" title="{{quote_service_photo.business_name | translate}}" class="center-block show feutrimgCont">
+                                                    <img class="center-block img-responsive" ng-src="{{imagename.image_name}}" alt="{{quote_service_photo.business_name | translate}}"
+                                                        title="{{quote_service_photo.business_name | translate}}">
+                                                </a>
+                                                <div class="edit-icon-align">
+                                                    <a title="{{'Edit' | translate}}" href="" ng-click='QuotePhotoEdit(imagename.foreign_id)'>
+                                                        <i class="fa fa-edit text-18"></i>
+                                                    </a>
+                                                    <a ng-click='QuotePhotoDelete(imagename.foreign_id)' href="" title="{{'Delete' | translate}}">
+                                                        <i class="fa fa-trash-o text-18"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <h3 class="text-18 text-gray htruncate no-mar">{{quote_service_photo.caption | translate}}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="binding-pagination">
+                            <div class="pagnation-content">
+                                <div class="clearfix pagnation-inner">
+                                    <div class="col-md-12" ng-hide="(quote_service_photos.length > itemsPerPage) && currentPage==1">
+                                        <uib-pagination ng-hide="!quote_service_photos.length" total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage"
+                                            ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages"
+                                            ng-click="paginate_photo()"></uib-pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-include="'views/loader.html'"></div>
+                    <div class="space">
+                        <div ng-show="!loader && !quote_service_photos.length">
+                            <p class="text-center text-danger">{{'No records available'|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

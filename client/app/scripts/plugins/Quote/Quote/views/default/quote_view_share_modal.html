@@ -1,0 +1,27 @@
+<div class="modal-content">
+    <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" ng-click="closeInstance()">&times;</button>
+        <h3 class="text-center no-mar pull-left">{{'Social Share'|translate}}</h3>
+    </div>
+    <div class="modal-body contest-share-modal">
+        <ul class="list-inline text-center social-btn">
+            <li ng-if='$root.twitter_provider != null'>
+                <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name|slugify}}" class="btn btn-twitter" socialshare socialshare-provider="twitter" socialshare-text="{{quote_service.business_name}}" socialshare-hashtags="{{quote_service.user.username}}" socialshare-url="{{absUrl}}" socialshare-media="{{quote_service_image}}"> <i class="fa fa-twitter" aria-hidden="true"></i> {{'twitter'|translate}}</a>
+            </li>
+           <!-- <li ng-if='$root.facebook_provider != null'>
+                <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name |slugify}}" class="btn btn-facebook" socialshare socialshare-provider="facebook" socialshare-title="{{quote_service.business_name}}" socialshare-type="share" socialshare-description="{{quote_service.description}}" socialshare-media=""
+                    socialshare-via="{{$root.facebook_provider}}" socialshare-display="popup" socialshare-quote="{{quote_service.business_name}}" socialshare-hashtags="{{quote_service.user.username}}" socialshare-caption="{{quote_service.business_name}}" socialshare-mobileiframe="true" socialshare-url="{{absUrl}}">
+                <i class="fa fa-facebook" aria-hidden="true"></i> {{'facebook'|translate}} </a>
+            </li>-->
+              <li ng-if='$root.facebook_provider != null'>
+                 <a href="#" class="btn btn-facebook" socialshare socialshare-provider="facebook" socialshare-text="{{quote_service.business_name}}" socialshare-hashtags="{{quote_service.user.username}}" socialshare-url="{{absUrl}}" socialshare-media="{{quote_service_image}}"> <i class="fa fa-facebook" aria-hidden="true"></i> {{'facebook'|translate}} </a> </a>
+            </li>
+            <li>
+                <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name |slugify}}" class="btn btn-pinterest" socialshare socialshare-provider="pinterest" socialshare-text="{{quote_service.business_name}}" socialshare-media="" socialshare-url="{{absUrl}}"> <i class="fa fa-pinterest" aria-hidden="true"></i> {{'pinterest'|translate}} </a>
+            </li>
+            <li ng-if='$root.google_provider != null'>
+                <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name |slugify}}" class="btn btn-google" socialshare socialshare-provider="google" socialshare-url="{{absUrl}}"> <i class="fa fa-google-plus" aria-hidden="true"></i> {{'Google+'|translate}} </a>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer"> </div>
+</div>

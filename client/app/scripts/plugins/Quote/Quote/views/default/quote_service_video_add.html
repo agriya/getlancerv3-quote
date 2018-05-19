@@ -1,0 +1,26 @@
+<div class="modal-content clearfix">
+    <div class="modal-header"> <button type="button" class="close" ng-click="ok()">x</button>
+        <h3 class="top-mar text-left">{{'Add Service Video' | translate}}</h3>
+    </div>
+    <div class="col-xs-12 top-mar">
+        <div class="alert alert-info text-center no-mar">
+            <span> {{'Add Your Promo Video Here. It Will Display for Users in Your Service Page'|translate}}. </span>
+        </div>
+    </div>
+    <div class="modal-body col-xs-12" ng-controller="QuoteServiceVideosManageController">
+        <form name="myForm" ng-submit="add(myForm.$valid)" enctype="multipart/form-data" class="clearfix" novalidate>
+            <div class="form-group top-mar">
+                <label for="video_url">{{'Add Video URL' | translate}}</label>
+                <input ng-model="embed_code" id="video_url" required class="form-control" name="video_url" />
+                <span class="error text-left" ng-show="(myForm.$submitted || myForm.video_url.$touched) && (myForm.video_url.$pristine || myForm.video_url.$invalid) && (myForm.video_url.$error.required)">{{'Required'| translate}} </span>
+            </div>
+             <ul class="list-unstyled text-12 grayc">
+                <li> e.g., https://vimeo.com/9503416 </li>
+                <li> https://www.youtube.com/watch?v=z3U0udLH974 </li>
+                <li> {{'Should not short URL'|translate}} </li>
+            </ul>
+            <button type="submit" class="btn btn-textb btn-primary" ng-show="!save_btn">{{'Submit' | translate}}</button>
+            <button type="submit" ng-show="save_btn" class="btn btn-textb btn-primary" disabled>{{'Submit'|translate}}</button>
+        </form>
+    </div>
+</div>

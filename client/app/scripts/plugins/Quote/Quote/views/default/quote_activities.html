@@ -1,0 +1,20 @@
+<div id="activities" class="lin-heig22 h6">
+	<h4> {{'Quote Activities'|translate}}</h4>
+	<div class="media" ng-if="quote_activities.length" ng-repeat="quote_activity in quote_activities">
+		<div class="pull-left">
+			<a href="users/{{quote_activity.user.id}}/{{quote_activity.user.username}}">
+				<img ng-src="{{quote_activity.image_name}}" alt="{{quote_activity.user.username}}" class="img-circle user-small" target="_black">
+			</a>
+		</div>
+		<div class="media-body">
+			<p ng-bind-html="quote_activity.message"></p>
+			<p class="no-mar"> 
+				<small class="ver-lft-space5">{{quote_activity.created_at | timeago}}</small> 
+			</p>
+		</div>
+	</div>
+	<div class="media" ng-if="!quote_activities.length">
+		<p>{{'No Activities' | translate}} </p>
+	</div>
+
+</div>

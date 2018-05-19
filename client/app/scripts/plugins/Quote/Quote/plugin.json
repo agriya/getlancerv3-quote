@@ -1,0 +1,10 @@
+{
+	"name": "Quote", 
+	"class": "fa fa-2x fa-file-text",
+	"description": "Quote",
+	"dependencies": "Quote",
+	"module_id": "816",
+	"module_hash": "3690f730864331763cb3f80f7a3d16a2",
+	"display_order": "18",
+	"plugin_name":"Quote/Quote"
+}

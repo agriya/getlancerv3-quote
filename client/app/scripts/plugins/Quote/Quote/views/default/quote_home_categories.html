@@ -1,0 +1,39 @@
+<section class="done-block" ng-if="quote_home_categories.length">
+    <div class="container">
+        <div class="clearfix">
+            <h2 class="text-center text-uppercase text-24 bot-mar-25 montserrat-bold">{{'What do you need done'|translate}}? </h2>
+            <!--<div class="pull-right quote-search">
+                <ui-select ng-model="search_category" on-select="PutCollection($item)">
+                    <ui-select-match placeholder="Search" class="">{{$select.selected.name}}</ui-select-match>
+                    <ui-select-choices position="down" class="banner-select" repeat="collection in search_categories track by $index" refresh="getCategories($select.search)" refresh-delay="0">
+                        <div class="s-name" ng-bind-html="collection.name | highlight: $select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>-->
+        </div>
+        <div class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+            <div class="owl-wrapper-outer">
+                <div class="owl-wrapper" ng-repeat="quote_home_category in quote_home_categories" style="display: block;">
+                    <div class="owl-item space col-sm-6 col-md-3" ng-repeat="category in quote_home_category">
+                        <div class="panel">
+                            <div class="quote-info-blk">
+                                <a href="service_category/{{category.id}}/{{category.slug}}" class="show text-center"><img ng-src="{{category.image_name}}" alt="{{category.name}}" title="{{category.name}}"></a>
+                                <h4 class="text-16 quote-name"><a href="service_category/{{category.id}}/{{category.slug}}" class="blackc">{{category.name}}</a></h4>
+                                <!--<p class="grayc text-12 htruncate-2"> {{category.description}} </p>-->
+                                <!--<p class="text-center req-btn"><a href="service_category/{{category.id}}/{{category.slug}}" class="btn btn-primary btn-rounded text-uppercase">{{'Request Quote'|translate}}</a></p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="owl-controls clickable">
+                <div class="owl-pagination">
+                    <div class="owl-page active"> <span class=""></span> </div>
+                    <div class="owl-page"> <span class=""></span> </div>
+                </div>
+            </div>-->
+        </div>
+        <div class="text-center">
+            <a href="service_category" title="" class="btn btn-primary text-uppercase btn-catergory">{{'See more category'|translate}}</a>
+        </div>
+</section>

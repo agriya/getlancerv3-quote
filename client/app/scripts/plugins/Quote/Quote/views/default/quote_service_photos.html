@@ -1,0 +1,11 @@
+<div ng-repeat="quote_service_photo in quote_service_photos" class="col-sm-4 col-md-3 col-xs-6 quote-service-photos">
+    <div class="" ng-repeat="imagename in quote_service_photo.attachment">
+        <div class="text-center bg-white howitBlocks qutoesBlock height-auto">
+            <div class="img-edit-block">
+                <div class="center-block show feutrimgCont">
+                    <img ng-src="{{imagename.image_name}}" alt="{{quote_service_photo.business_name | translate}}" title="{{quote_service_photo.business_name | translate}}" class="img-thumbnail img-responsive center-block">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

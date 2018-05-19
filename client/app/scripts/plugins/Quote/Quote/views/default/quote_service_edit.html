@@ -1,0 +1,305 @@
+<div class="gray-bg top-space top-mspace-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb panel">
+                    <li> <a href="users/dashboard?type=my_service_active&status=all">{{'Home'|translate}}</a> </li>
+                    <!--<li><a href="quote_service/my_services">{{'My Services'|translate}}</a></li>-->
+                    <li class="active">{{'Edit Service'|translate}} - {{quote_edit.business_name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-controller="QuoteServiceEditController">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div ng-include="'scripts/plugins/Quote/Quote/views/default/users_services_left_side_menu.html'">
+                </div>
+            </div>
+
+            <div class="col-md-8 col-lg-9 navbar-btn">
+                <div class="service-add">
+                    <div class="no-mar" ng-if="quote_active === false">
+                        <div class="alert alert-warning quote-alert">
+                            <span>{{'This service listing is in draft mode'|translate}}.</span>
+                            <button class="btn gradi-rnd-btn btn-primary pull-right" ng-click="setQuoteActive()"><i class="fa fa-check right-space"></i>{{"I'm done all update and publish this now"|translate}}</button>
+                        </div>
+                    </div>
+                    <div class="section navbar-default">
+                        <form class="form-horizontal adminpg-form" role="form" enctype="multipart/form-data" name="frmuser_quote_service_update"
+                            ng-submit="save(frmuser_quote_service_update.$valid)" novalidate>
+                            <div class="panel">
+                                <div class="panel-heading sep-bot">
+                                    <h3 style="display:inline;">{{'Basic Informations'|translate}}</h3>
+                                </div>
+                                <div class="panel-heading">
+                                    <div class="">
+                                        <!--<div class="form-group" ng-show="user.role_id == ConstUserRole.Admin && isAuth">
+									<div class="col-sm-4">
+                                        <label for="inputBusinessName3" class="control-label">{{'Service Pro '|translate}}<span class="required-label">&nbsp;*</span></label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                       <select ng-model="user_quote_service_update.user_id" class="selectpicker" ng-options = "user.id as user.text for user in freelancerUser" data-show-subtext="false" data-live-search="true">  </select>
+                                    </div>       
+                                    </div> -->
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputBusinessName3" class="control-label">{{'Business Name'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8"> <input type="text" ng-change="quoteCustomValidatorEdit()" ng-model="user_quote_service_update.business_name"
+                                                    class="form-control" id="inputBusinessName3" autocomplete="off" name="inputBusinessName3"
+                                                    ng-maxlength="100" placeholder="{{'Business Name'|translate}}" required>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputBusinessName3.$touched) && (frmuser_quote_service_update.inputBusinessName3.$pristine ||             frmuser_quote_service_update.inputBusinessName3.$invalid) && (frmuser_quote_service_update.inputBusinessName3.$error.maxlength)">
+                                                {{'Maximum length is 100'| translate }}
+                                                </span>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputBusinessName3.$touched) && (frmuser_quote_service_update.inputBusinessName3.$pristine || frmuser_quote_service_update.inputBusinessName3.$invalid) &&(frmuser_quote_service_update.inputBusinessName3.$error.required)">{{'Required'| translate }} </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputHowDoesYourServiceStandOut3" class="control-label">{{'How Does Your Service Stand Out'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <textarea ng-change="quoteCustomValidatorEdit()" ng-model="user_quote_service_update.how_does_your_service_stand_out" class="form-control"
+                                                    id="inputHowDoesYourServiceStandOut3" placeholder="{{'How Does Your Service Stand Out'|translate}}"
+                                                    name="description" required>
+                                                </textarea>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted ||
+                                                      frmuser_quote_service_update.description.$touched) && (frmuser_quote_service_update.description.$pristine || 
+                                                      frmuser_quote_service_update.description.$invalid) &&(frmuser_quote_service_update.description.$error.required)">{{'Required'| translate }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputWhatDoYouEnjoyAboutTheWorkYouDo3" class="control-label">{{'What Do You Enjoy About The Work You Do'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <textarea ng-change="quoteCustomValidatorEdit()" ng-model="user_quote_service_update.what_do_you_enjoy_about_the_work_you_do"
+                                                    class="form-control" id="inputWhatDoYouEnjoyAboutTheWorkYouDo3" placeholder="{{'What Do You Enjoy About The Work You Do'|translate}}"
+                                                    name="work_to_do" required>
+                                                </textarea>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted ||
+                                                      frmuser_quote_service_update.work_to_do.$touched) && (frmuser_quote_service_update.work_to_do.$pristine || 
+                                                      frmuser_quote_service_update.work_to_do.$invalid) &&(frmuser_quote_service_update.work_to_do.$error.required)">{{'Required'| translate }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputWebsiteUrl3" class="control-label">{{'Website URL'|translate}}</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input autocomplete="off" type="url" ng-model="user_quote_service_update.website_url" name="inputWebsiteUrl3" class="form-control"
+                                                    id="inputWebsiteUrl3" placeholder="{{'Website URL'|translate}}">
+                                                <span class="grayc text-12">{{'e.g., (http://example.com/)'| translate}}</span>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputWebsiteUrl3.$touched) && (frmuser_quote_service_update.inputWebsiteUrl3.$pristine || frmuser_quote_service_update.inputWebsiteUrl3.$invalid) && (frmuser_quote_service_update.inputWebsiteUrl3.$error.url)">{{'Enter a valid URL'| translate }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputPhoneNumber3" class="control-label">{{'Phone Number'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input ng-change="quoteCustomValidatorEdit()" autocomplete="off" type="number" ng-model="user_quote_service_update.phone_number"
+                                                    class="form-control" id="inputPhoneNumber3" name="inputPhoneNumber3" placeholder="{{'Phone Number'|translate}}
+                                            " ng-required="true">
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputPhoneNumber3.$touched) && (frmuser_quote_service_update.inputPhoneNumber3.$pristine || frmuser_quote_service_update.inputPhoneNumber3.$invalid) && (frmuser_quote_service_update.inputPhoneNumber3.$error.required)"> {{' Required '| translate }} </span>
+
+                                          
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputNumberOfEmployees3" class="control-label">{{'Number Of Employees'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input autocomplete="off" type="number" ng-model="user_quote_service_update.number_of_employees" string-to-number class="form-control"
+                                                    id="inputNumberOfEmployees3" name="inputNumberOfEmployees3" placeholder="{{'Number Of Employees'|translate}}"
+                                                    min="1" required number-only>                                                <span class="error" ng-show="frmuser_quote_service_update.inputNumberOfEmployees3.$error.min==true && !frmuser_quote_service_update.inputNumberOfEmployees3.$error.required"> {{'Please enter the valid number'|translate}}</span>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputNumberOfEmployees3.$touched) && (frmuser_quote_service_update.inputNumberOfEmployees3.$pristine || frmuser_quote_service_update.inputNumberOfEmployees3.$invalid) && (frmuser_quote_service_update.inputNumberOfEmployees3.$error.required)"> {{'Required '| translate }} </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputYearFounded3" class="control-label">{{'Year Founded'|translate}}<span class="required-label">&nbsp;*</span></label>
+                                            </div>
+                                            <div class="col-sm-8 frm-select">
+                                                <select ng-model="user_quote_service_update.year_founded" id="inputYearFounded3" required class="form-control" ng-options="year for year in years"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel checkbox-list">
+                                <div class="panel-heading sep-bot mar-bot-10">
+                                    <h3 class="no-mar">{{'Category'|translate}} <span class="required-label">&nbsp;*</span></h3>
+                                </div>
+                                <ul class="list-unstyled clearfix">
+                                    <li data-ng-repeat="parent in quote_service_categories">
+                                        <label class="custom-checkbox checkbox">
+                                                <input type="checkbox" ng-checked="checkStatus(parent.id, category_selected)" ng-click="select_child(parent.children,parent.id)" ng-model="user_quote_service_update.quote_categories_add[parent.id]" name="quote_categories_add[{{parent.id}}]" value="{{parent.id}}" ng-required="!user_quote_service_update.quote_categories_add">
+                                                <span>{{parent.name}}</span>
+                                            </label>
+                                        <ul ng-if="parent.children.length" class="quote-service-list list-inline">
+                                            <li data-ng-repeat="child in parent.children">
+                                                <label class="custom-checkbox checkbox">
+                                                        <input ng-click="select_parent(parent.id)" ng-checked="checkStatus(child.id, category_selected)"  type="checkbox" ng-model="user_quote_service_update.quote_categories_add[child.id]"  name="quote_categories_add[{{child.id}}]" value="{{child.id}}" ng-required="!user_quote_service_update.quote_categories_add">
+                                                        <span>{{child.name}}</span>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="error" ng-show="(frmuser_quote_service_update.$submitted) && !user_quote_service_update.quote_categories_add">
+                                        {{' Required '| translate }} 
+                                        </span>
+                                    </li>
+                                </ul>
+
+                                <!--<span class="error" ng-show="(frmquoteServiceAdd.$submitted) && !quoteServiceAdd.quote_categories_add"> {{' Required '| translate }} </span>     -->
+                            </div>
+                            <div class="panel">
+                                <div class="panel-heading sep-bot">
+                                    <h3 style="display:inline;">{{'Work Location'|translate}}</h3>
+                                </div>
+                                <div class="panel-heading">
+                                    <div class="">
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputFullAddress3" class="control-label">{{'Full Address'|translate}}
+                                                    <span class="required-label">&nbsp;*</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input autocomplete="off" class="form-control" id="inputFullAddress3" g-places-autocomplete force-selection="true" ng-change="location()"
+                                                    ng-model="place" name="inputFullAddress3" required/>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputFullAddress3.$touched) && (v.inputFullAddress3.$pristine || frmuser_quote_service_update.inputFullAddress3.$invalid) && (frmuser_quote_service_update.inputFullAddress3.$error.required)"> {{' Required '| translate }} </span>
+                                                <p class="help-block text-muted text-12">{{'You must select address from autocomplete'|translate}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="inputZip3" class="control-label">{{'Zip Code'|translate}}
+                                                    <span class="required-label">&nbsp;*</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input ng-change="quoteCustomValidatorEdit()" autocomplete="off" type="text" ng-model="user_quote_service_update.zip_code"
+                                                    class="form-control" id="inputZip3" ng-disabled="disable_zip" placeholder="{{'Zip Code'|translate}}"
+                                                    name="inputZip3" required min="1" number-only>
+                                                <span class="error" ng-show="frmuser_quote_service_update.inputZip3.$error.min && !frmuser_quote_service_update.inputZip3.$error.required">{{'Enter the valid Number'|translate}}</span>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.inputZip3.$touched) && (frmuser_quote_service_update.inputZip3.$pristine || frmuser_quote_service_update.inputZip3.$invalid) && (frmuser_quote_service_update.inputZip3.$error.required)"> {{'Required '| translate }} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                            <label for="inputIsCustomerTravelToMe3" class="control-label">{{'Where Do You Need It Done?'|translate}}</label>
+                                            <span class="required-label">&nbsp;*</span>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="checkbox1">
+                                                <label for="inputIsCustomerTravelToMe3" class="custom-checkbox checkbox">
+                                                    <input autocomplete="off" type="checkbox" id="inputIsCustomerTravelToMe3" ng-model="user_quote_service_update.is_customer_travel_to_me" ng-true-value="1" ng-false-value="0" >
+                                                    <span> {{'Customer Travel To Me'|translate}}</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox1 travel-km">
+                                                <label for="inputServiceProviderTravelsUpto3" class="custom-checkbox checkbox">
+                                                    <input id="inputServiceProviderTravelsUpto3" autocomplete="off" type="checkbox" ng-model="user_quote_service_update.is_service_provider_travel_to_customer_place" ng-true-value="1" ng-false-value="0" ng-change="user_quote_service_update.service_provider_travels_upto = user_quote_service_update.service_provider_travels_upto ? '' : quser_quote_service_update.service_provider_travels_upto">
+                                                    <span> {{'I will travel up to'|translate}}</span>
+                                                </label>
+                                            </div>
+                                            <div class="travel-distance">
+                                                <input autocomplete="off" type="number" name="travel_upto" ng-change="quoteCustomValidatorEdit()" class="form-control" ng-model="user_quote_service_update.service_provider_travels_upto"
+                                                    ng-required="user_quote_service_update.is_service_provider_travel_to_customer_place == 1"
+                                                    required min="1" ng-disabled="user_quote_service_update.is_service_provider_travel_to_customer_place == 0"
+                                                    number-only>
+                                                <span> {{'KM'|translate}} </span> <br>
+                                                <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.travel_upto.$touched)
+                                                 && (frmuser_quote_service_update.travel_upto.$pristine || frmuser_quote_service_update.travel_upto.$invalid) &&
+                                                  (frmuser_quote_service_update.travel_upto.$error.required)"> {{' Required '| translate }} </span>
+                                                <span class="error" ng-show="frmuser_quote_service_update.travel_upto.$error.min && !frmuser_quote_service_update.travel_upto.$error.required">{{'Enter the valid Number'|translate}}</span>
+                                            </div>
+                                            <div class="checkbox1">
+                                                <label for="is_over_phone_or_internet" class="custom-checkbox checkbox">
+                                                    <input autocomplete="off"  type="checkbox" id="is_over_phone_or_internet" ng-true-value="1" ng-false-value="0" ng-model="user_quote_service_update.is_over_phone_or_internet" >
+                                                    <span> {{'Neither (over phone or internet)'|translate}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <span class="error" ng-show="(frmuser_quote_service_update.$submitted) && (!user_quote_service_update.is_service_provider_travel_to_customer_place && !user_quote_service_update.is_customer_travel_to_me && !user_quote_service_update.is_over_phone_or_internet)"> {{' Required '| translate }} </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4"> <label class="control-label" for="inputTaskAttachments">{{'Service Image' | translate}}<span class="required-label">&nbsp;*</span></label>
+                                        </div>
+                                        <div class="col-sm-8 service-add-list">
+                                            <!--<div class="file-upload">
+                                                <label for="real">
+                                                    <i class="fa fa-cloud-upload media-middle fa-fw"></i> Browse
+                                                </label>
+                                                <input type="text" name="upload" class="form-control" id="custom-upload" />
+                                            </div>
+                                            <input type="file" ngf-select ng-model="file" name="file" id="real" class="realupload hide" ng-change="uploadServicePhotoEdit(file)" onchange="this.form.upload.value = this.value;" class="underline text-red" accept="image/*">-->
+                                            <!--<input type="file" ngf-select ng-model="file" name="file" ng-change="uploadServicePhotoEdit(file)" class="underline text-red" accept="image/*">-->
+                                            <label class="fileinput-button btn-block">
+                                                <input type="file" ngf-select ng-model="file" name="file" ng-change="uploadServicePhotoEdit(file)" class="underline text-red" accept="image/*">
+                                                <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
+                                                {{'Upload File'|translate}}
+                                            </label>
+                                            <div class="grayc help-block">
+                                             <p ng-if='$root.settings.MAX_UPLOAD_SIZE_OF_SERVICE_PHOTO'>
+                                            <small>{{'Maximum allowed size:'|translate}} 
+                                            {{$root.settings.MAX_UPLOAD_SIZE_OF_SERVICE_PHOTO}} {{'MB'|translate}}</small>
+                                            </p>
+                                            <p ng-if='$root.settings.ALLOWED_EXTENSIONS_OF_SERVICE_PHOTO'><small >{{'Allowed extensions:'|translate}} 
+                                            {{$root.settings.ALLOWED_EXTENSIONS_OF_SERVICE_PHOTO}}</small>
+                                            </p>
+                                            <span class="error" ng-if="error_message && error_message !== ''">{{error_message}}</span>
+                                            </div>
+                                            <span ng-show="!file">
+                                            <img ng-src="{{quote_service_image}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}" class="img-responsive top-mspace"></span>
+                                            <div ng-show="file">
+                                                <img ngf-src="file" alt="[Image: Group]" title="Group" class="img-responsive">
+                                            </div>
+                                            <span class="error" ng-show="(frmuser_quote_service_update.$submitted || frmuser_quote_service_update.file.$touched) && (frmuser_quote_service_update.file.$pristine || frmuser_quote_service_update.file.$invalid) && (frmuser_quote_service_update.file.$error.required)"> {{'Required'| translate }} </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix bot-big-mspace">
+                                    <div class="col-sm-offset-4 col-sm-8">
+                                        <button type="submit" ng-show="save_btn" class="btn  btn-primary" disabled>{{'Update'|translate}}</button>
+                                        <button type="submit" ng-show="!save_btn" class="btn  btn-primary">{{'Update'|translate}}</button>
+                                        <button type="submit" ng-show="save_btn && !user_quote_service_update.is_active" ng-click="user_quote_disable('active', frmuser_quote_service_update.$valid)"
+                                            class="btn  btn-primary" disabled>{{'Publish this Service'|translate}}</button>
+                                        <button type="submit" ng-show="!save_btn && !user_quote_service_update.is_active" ng-click="user_quote_disable('active', frmuser_quote_service_update.$valid)"
+                                            class="btn  btn-primary">{{'Publish this Service'|translate}}</button>
+                                        <span ng-show="user_quote_service_update.is_active">
+                                            <!--<button type="submit" ng-show="save_btn && user_quote_service_update.is_active" ng-click="user_quote_service_update.is_active=0" class="btn  btn-danger" disabled>{{'Mark as Disable'|translate}} </button>-->
+                                            <button type="submit" ng-click="user_quote_disable('disable', frmuser_quote_service_update.$valid)" class="btn  btn-danger">{{'Mark as Disable'|translate}} </button>
+                                            <i class="fa fa-info-circle cursor" title="{{'If disabled, quote request will not come from users until enable this service'|translate}}."></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-4 col-sm-5">
+                <div class="post-project top-mspace-10">
+                    <div class="bg-primary">
+                        <h4 class="text-center no-mar">{{'Get More Works Done'|translate}}</h4>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content">  {{'Post your service'|translate}}. </span></li>
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'Get quote requests from users'|translate}}.</span></li>
+                        <li> <span class="sprite sprite-head-check2"> </span> <span class="menu-content"> {{'Complete work and earn money'|translate}}. </span></li>
+                    </ul>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

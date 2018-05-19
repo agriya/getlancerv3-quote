@@ -1,0 +1,35 @@
+<div class="quote-categorie-blk">
+    <div class="container">
+        <div class="text-center howHead">
+            <h2 class="text-uppercase text-44 big-mspace ng-binding Montserrat">{{'All' | translate}} <span class="text-primary ng-binding">{{'Services' | translate}}</span></h2>
+            <p class="center-block text-18 howP no-mar ng-binding"> Post a request, receive a quote, hire fitting services and get everything done on a fly.</p>
+        </div>
+    </div>
+</div>
+<div class="section quick-link">
+    <div class="container">
+        <div class="quote-categorie-list">
+                <!--    <div class="col-sm-3" ng-repeat="parent in quote_service_types">
+                    <h3><a href="service_category/{{parent.id}}/{{parent.slug}}">{{parent.name}}</a></h3>
+                    <div ng-if="parent.children.length">
+                        <ul class="list-unstyled">
+                            <li ng-repeat="child in parent.children"> <a title="{{child.name}}" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" href="">{{child.name}}</a> <a title="{{child.name}}" href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(child.id,'null','category')">{{child.name}}</a>                                </li>
+                        </ul>
+                    </div>
+                </div>-->
+            <ul class="list-unstyled">
+                <li class="" ng-repeat="parent in quote_service_types">
+                    <h3><a href="service_category/{{parent.id}}/{{parent.slug}}">{{parent.name}}</a></h3>
+                    <ul class="list-unstyled">
+                        <li ng-repeat="child in parent.children">
+                                <i class="fa fa-angle-right"></i>
+                                <a title="{{child.name}}" ng-if="!$root.isAuth" ng-click="openLoginModal('login')" href="service_category">{{child.name}}</a> 
+                                <a title="{{child.name}}" href="" ng-if="$root.isAuth" ng-click="openQuoteRequestModal(child.id,'null','category',child.name)">{{child.name}}</a>                                
+                        </li>
+                    </ul>
+                </li>
+                <li>&nbsp;</li>
+            </ul>
+        </div>
+    </div>
+</div>

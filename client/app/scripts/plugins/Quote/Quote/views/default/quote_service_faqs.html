@@ -1,0 +1,11 @@
+<ul class="list-unstyled media-list row" ng-repeat="faq_ans in faqs">
+    <li class="col-sm-6" ng-if="faqs.length" ng-repeat="faq in faq_ans">
+        <div class="media">
+            <div class="pull-left"> <img src="images/arrow-right.png" class="media-object"> </div>
+            <div class="media-body">
+                <h3 class="h4 no-mar lin-heig22" ng-bind-html="faq.question | nl2br"></h3>
+                <p class="lin-heig22 h5" ng-bind-html="faq.answer | nl2br"></p>
+            </div>
+        </div>
+    </li>
+</ul>

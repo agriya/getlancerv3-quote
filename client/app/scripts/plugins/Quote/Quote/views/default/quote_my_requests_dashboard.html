@@ -1,0 +1,118 @@
+<div class="row" ng-controller="quoteServicesMyRequestDashboardCtrl">
+    <!--<div class="big-mspace">
+        <h3 class="no-mar" ng-if="!set_request">{{'My Request'|translate}} - {{'All'|translate}}</h3>
+        <h3 class="no-mar" ng-if="set_request"> {{'My Request'|translate}} - {{my_request_name}}</h3>
+    </div>-->
+    <div class="big-mspace">
+        <ul class="list-inline dashboard-list text-center project-lists">
+            <li ng-class="{active:request_status == null}" data-class="request_status">
+                <a href="" ng-click="setRequestFilter(null, 'All')">
+                    <span class="badge badge-yellow">{{quote_request_status_count.all_count}}</span>
+                    <p class="no-mar blackc">{{'All'|translate}}</p>
+                </a>
+            </li>
+            <li ng-class="{active:request_status == 'ConstType.open'}" data-class="request_status">
+                <a href="" ng-click="setRequestFilter('ConstType.open', 'Open')">
+                    <span class="badge badge-blue">{{quote_request_status_count.open_count}}</span>
+                    <p class="no-mar blackc">{{'Active'|translate}}</p>
+                </a>
+            </li>
+            <li ng-class="{active:request_status == 'ConstType.Archived'}" data-class="request_status">
+                <a href="" ng-click="setRequestFilter('ConstType.Archived', 'Archived')">
+                    <span class="badge badge-magenta">{{quote_request_status_count.archived_count}}</span>
+                    <p class="no-mar blackc">{{'Archive'|translate}}</p>
+                </a>
+            </li>
+            <!--<li> <a class="btn btn-primary" href="service_category">{{'Quote My Request'|translate}}</a> </li>-->
+        </ul>
+    </div>
+    <div class="col-xs-12">
+        <div class="table-block table-left-action drop-space">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="75" rowspan="2" class='text-center'> {{'Action'|translate}} </th>
+                            <th rowspan="2"> {{'Request' |translate}}</th>
+                            <th rowspan="2"> {{'Category' |translate}}</th>
+                            <th class="text-center" colspan="5"> {{'Quotes' |translate}}</th>
+                            <th rowspan="2"> {{'Requested On' |translate}}</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center"> {{'New/Discussion' |translate}}</th>
+                            <th class="text-center"> {{'Hired' |translate}}</th>
+                            <th class="text-center"> {{'Completed' |translate}}</th>
+                            <th class="text-center"> {{'Incompleted' |translate}}</th>
+                            <th class="text-center"> {{'Closed' |translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="quote_request in quote_request_user">
+                            <td class="text-center">
+                                <div class="btn-group" uib-dropdown>
+                                    <button id="single-button" type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle ng-disabled="disabled">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                        <li role="menuitem">
+                                            <a href="quote_bids/my_requests/{{quote_request.id}}"> <i class="fa fa-pencil"> </i> {{'View Quotes' | translate}} 
+                                        </li>
+                                         <li role="menuitem" ng-if ='quote_request.is_archived == false'>
+                                            <a href='' ng-click='setArchived(quote_request.id)'> <i class="fa fa-pencil"> </i> {{'Mark as Archived' | translate}} 
+                                        </li>
+                                        <li role="menuitem" ng-if ='quote_request.is_archived == true'>
+                                            <a href='' ng-click='setUnArchived(quote_request.id)'> <i class="fa fa-pencil"> </i> {{'Mark as Unarchived' | translate}} 
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>{{quote_request.quote_category.name}}</td>
+                            <td>{{quote_request.title}} </td>
+                            <td class="text-center">  
+                                <a href="quote_bids/my_requests/{{quote_request.id }}/{{ConstQuoteStatuses.UnderDiscussion}}/under_discussion">{{quote_request.quote_bid_discussion_count}}</a>
+                            </td>
+                            <td class="text-center">                              
+                                <a href="quote_bids/my_requests/{{quote_request.id }}/{{ConstQuoteStatuses.Hired}}/hired">{{quote_request.quote_bid_hired_count}}</a>
+                            </td>
+                            <td class="text-center">  
+                                <a href="quote_bids/my_requests/{{quote_request.id }}/{{ConstQuoteStatuses.Completed}}/completed">{{quote_request.quote_bid_completed_count}}</a>               
+                            </td>
+                             <td class="text-center">  
+                                <a href="quote_bids/my_requests/{{quote_request.id }}/{{ConstQuoteStatuses.Closed}}/closed">
+                                <span ng-if="quote_request.quote_bid_not_completed_count == null">0</span>
+                                <span ng-if="quote_request.quote_bid_not_completed_count != null">{{quote_request.quote_bid_not_completed_count}}</span></a>
+                            </td>
+                             <td class="text-center">  
+                                <a href="quote_bids/my_requests/{{quote_request.id }}/{{ConstQuoteStatuses.Closed}}/closed">{{quote_request.quote_bid_closed_count}}</a>               
+                            </td>
+                            <td><span title="{{quote_request.updated_at}}">{{quote_request.updated_at | timeago}}</span> </td>
+                        </tr>
+                        <tr ng-if="!quote_request_user.length && !loader" class="text-center">
+                            <td colspan="10">                                
+                                <p class="text-danger no-mar"> {{'No records available'|translate}} </p>                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div ng-if="quote_request_user.length" class="big-mspace">
+                    <div class="binding-pagination">
+                        <div class="pagnation-content">
+                            <div>
+                                <div class="clearfix pagnation-inner">
+                                    <uib-pagination previous-text="Previous" next-text="Next" total-items="totalItems" num-pages="numPages" ng-model="currentPage"
+                                    max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"
+                                    items-per-page="itemsPerPage" ng-change="pageChanged(currentPage)"></uib-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div ng-if="!quote_request_user.length && loader" class="text-center">
+                    <span>
+                        <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                    </span> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

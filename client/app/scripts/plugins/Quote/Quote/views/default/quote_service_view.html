@@ -1,0 +1,202 @@
+<section class="bg-grey analystics-blk" ng-if='show_response_page == true'>
+    <div class="container">
+        <div class="row">
+            <div class="width-block">
+                <div class="media research-blk">
+                    <ul class="breadcrumb navbar-btn panel">
+                        <li> <a href="users/dashboard?type=my_service_active&status=all">{{'Home'|translate}}</a> </li>
+                        <li class="active">{{'My Service'|translate}} - {{quote_service.business_name}} </li>
+                    </ul>
+
+                    <div class="pull-left">
+                        <div class="panel"> <img ng-src="{{quote_service_image}}" alt="{{quote_service.business_name}}" title="{{quote_service.business_name}}"
+                                class="img-responsive img-thumbnail center-block"> </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading" ng-if='quote_service.user_id != user.id'>
+                            <h4 class="h3 ver-mspace15">{{quote_service.business_name}}</h4>
+                        </div>
+
+                        <p class="ver-mspace15 text-16">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> {{quote_service.full_address}} </p>
+                        <quote_view_share> </quote_view_share>
+                        <span ng-show="quote_service.total_rating > 0" class="myrating" uib-rating ng-model="quote_service.total_rating" max="5"
+                            read-only="true" state-on="'fa fa-star fa-lg'" state-off="'fa fa-star-o fa-lg'"></span>                        <a ng-show="quote_service.total_rating > 0" href="" title="{{quote_service.total_rating}} {{'Review'| translate}}"
+                            class="h4 text-16 reviews">{{quote_service.total_rating}} {{'Review'| translate}}</a>
+                        <quote_services_flag></quote_services_flag>
+                    </div>
+                </div>
+                <div class="clearfix quote-block bot-mspace">
+                    <a href="javascript:void(0)" ng-click="openQuoteRequestModal('null',quote_service.id,'service')" class="btn gradi-rnd-btn pull-right Montserrat">{{'GET QUOTE'|translate}}</a>
+                </div>
+                <hr>
+                <div id="nav">
+                    <ul class="list-inline list-block text-center clearfix">
+                        <li role="presentation" ng-show="quote_service_media_total > 0"> <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name  | slugify}}" class="text-16 h4 "
+                                ng-click="quoteServiceViewScroll('photos')">
+                        {{'Photos'|translate}}                        
+                        ({{quote_service.quote_service_photo_count ? quote_service.quote_service_photo_count : 0}}) /
+                        {{'Videos'|translate}}
+                        ({{quote_service.quote_service_video_count ? quote_service.quote_service_video_count : 0}}) 
+                             
+                        <!--{{'Audios'|translate}}
+                        ({{quote_service.quote_service_audio_count? quote_service.quote_service_audio_count : 0}}) -->
+                         </a> </li>
+                        <li role="presentation"> <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name  | slugify}}" ng-click="quoteServiceViewScroll('cmd')"
+                                class="text-16 h4 text-muted smoothScroll">{{'About this Service'|translate}}</a> </li>
+                        <li role="presentation" ng-show="quote_service.review_count > 0"> <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name  | slugify}}" ng-click="quoteServiceViewScroll('cmr')"
+                                class="text-16 h4 text-muted smoothScroll">{{'Review'|translate}}</a> </li>
+                        <li role="presentation" ng-show="quote_service.quote_faq_answer_count > 0"> <a href="quote_service/{{quote_service.id}}/{{quote_service.business_name  | slugify}}" ng-click="quoteServiceViewScroll('cmq')"
+                                class="text-16 h4 text-muted smoothScroll">{{'FAQs'|translate}}</a> </li>
+                        <li class="btn-group" uib-dropdown ng-if='quote_service.user_id == user.id'>
+                            <button type="button" uib-dropdown-toggle ng-disabled="disabled" class='btn btn-primary  Montserrat'>
+                                        {{'Action'|translate}}
+                                    <!--<i class="fa fa-cog" aria-hidden="true"></i>-->
+                                </button>
+                            <ul class="dropdown-menu dropdown-arrow" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem">
+                                    <a href="user/quote_service/edit/{{quote_service.id}}"> <i class="fa fa-fw fa-pencil-square"> </i> {{'Edit this Service' | translate}} </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="quote_service_photos/{{quote_service.id}}"> <i class="fa fa-fw fa-picture-o"> </i> {{'Manage Photos' | translate}} </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="quote_service_videos/{{quote_service.id}}"> <i class="fa fa-fw fa-file-video-o"> </i> {{'Manage Videos' | translate}} </a>
+                                </li>
+                                <li role="menuitem">
+                                    <a href="quote_service_faqs/{{quote_service.id}}"> <i class="fa fa-fw fa-question-circle-o"> </i> {{'Manage FAQs' | translate}} </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <hr>
+            </div>
+
+
+        </div>
+        <div class="width-block" id="photos" ng-show="quote_service_media_total > 0">
+            <div class="ver-mspace15 text-center img-section">
+                <div class="row">
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_photos></quote_service_photos>
+                    <!-- END:  Quote Photos -->
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_videos></quote_service_videos>
+                    <!-- END:  Quote Photos -->
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_audios></quote_service_audios>
+                    <!-- END:  Quote Photos -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="cmd" class="abt-proj-blk" ng-if='show_response_page == true'>
+    <div class="container">
+        <div class="row">
+            <div class="width-block">
+                <div class="ver-mspace30 ver-space10">
+                    <h4 class="h3 text-center no-mar service-border">{{'About this Service'|translate}}</h4>
+                </div>
+                <ul class="list-inline text-center media-proj abt-service">
+                    <li ng-show="quote_service.website_url" class="media">
+                        <span> <img src="images/website-ecosys.png" alt="{{quote_service.website_url}}" title="{{quote_service.website_url}}" class="media-object center-block"> </span>
+                        <div class="top-space-10">
+                            <p class="no-mar">{{'Website'|translate}} <a class="text-info" href="{{quote_service.website_url}}" target="_blank"
+                                    title="{{quote_service.website_url}}" class="media-left">{{quote_service.website_url}} </a></p>
+                        </div>
+                    </li>
+                    <li class="text-center">
+                        <ul class="list-inline">
+                            <li ng-if="quote_service.service_provider_travels_upto">
+                                <span class="status-show">
+                                    <img src="images/customer-travel.png" alt="{{'Service provider will travel upto'|translate}} {{quote_service.service_provider_travels_upto}} {{'KMS'|translate}}" class="media-object">
+                                    <span ng-if="quote_service.is_service_provider_travel_to_customer_place">
+                                        {{'Service provider will travel upto'|translate}} {{quote_service.service_provider_travels_upto}} {{'KMS'|translate}} 
+                                    </span>
+                                </span>
+                            </li>
+                            <li ng-if="quote_service.is_customer_travel_to_me">
+                                <span class="status-show">
+                                    <img src="images/customer-travel_tome.png" alt="{{'Customer travel to service location'|translate}}" class="media-object">
+                                    <span>
+                                        {{'Customer travel to service location'|translate}} 
+                                    </span>
+                                </span>
+                            </li>
+                            <li ng-if="quote_service.is_over_phone_or_internet">
+                                <span class="status-show">
+                                    <img src="images/customer-not_travel.png" alt="{{'No travel required (over phone or internet)'|translate}}" class="media-object">
+                                    <span>
+                                        {{'No travel required (over phone or internet)'|translate}} 
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                        <p class="no-mar text-center top-space-10">{{'Travel preference'|translate}} </p>
+                    </li>
+                    <li ng-show="quote_service.year_founded" class="media">
+                        <span> <img src="images/clk.png" alt="{{'Since in Business'|translate}}" title="{{'Since in Business'|translate}}" class="media-object center-block"> </span>
+                        <div class="top-space-10">
+                            <p class="no-mar">{{'Since in business'|translate}} <strong>{{quote_service.year_founded}}</strong></p>
+                        </div>
+                    </li>
+                    <li ng-show="quote_service.number_of_employees" class="media">
+                        <span class=""> <img src="images/users.png" alt="{{'Number of employees'|translate}}" title="{{'Number of employees'|translate}}" class="media-object center-block"> </span>
+                        <div class="top-space-10">
+                            <p class="no-mar">{{'Number of employees'|translate}} <strong>{{quote_service.number_of_employees}}+</strong></p>
+                        </div>
+                    </li>
+                    <li ng-show="quote_service.hired_count > 0" class="media">
+                        <span class=""> <img src="images/trophy.png" alt="{{'Hired'|translate}}" title="{{'Hired'|translate}}" class="media-object center-block"> </span>
+                        <div class="top-space-10">
+                            <p class="no-mar">{{'Hired'|translate}} <strong>{{quote_service.hired_count}}</strong></p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="ver-mspace30 text-center">
+                    <h3 class="text-18"> {{'How does your service stand out'|translate}} </h3>
+                    <p class="text-15 bot-mspace-35"> {{quote_service.how_does_your_service_stand_out}} </p>
+                    <h3 class="text-18"> {{'What do you enjoy about the work you do'|translate}} </h3>
+                    <p class="text-15"> {{quote_service.what_do_you_enjoy_about_the_work_you_do}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<quote_review_service_view></quote_review_service_view>
+<section id="cmq" class="faq-blk" ng-show="quote_service.quote_faq_answer_count > 0" ng-if='show_response_page == true'>
+    <div class="container">
+        <div class="ver-space10">
+            <div class="ver-mspace30 ver-space10">
+                <div class="text-center">
+                    <h4 class="h3 no-mar"> {{'FAQs'|translate}} </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- BEGIN: Quote Photos -->
+                    <quote_service_faqs></quote_service_faqs>
+                    <!-- END:  Quote Photos -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-primary" ng-if='show_response_page == true'>
+    <div class="container">
+        <div class="ver-top-mspace30 ver-space10">
+            <div class="text-center">
+                <h4 class="h3 no-mar text-uppercase Montserrat text-22"> <strong>{{'Get started today'|translate}}</strong> </h4>
+                <p class="h4 ver-mspace15 text-16 lin-heig22"> {{'Excesses apply for Quote Workers. Learn more about Insurance and services for task to raise the location.'|translate}}
+                    </p>
+                <ul class="list-inline ver-mspace30 started-list">
+                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && Freelancer"> <a href="quote_service/add" title="{{'Post Service'|translate}}" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Post Service'|translate}}</a>                        </li>
+                    <li ng-if="settings.SITE_ENABLED_PLUGINS.indexOf('Quote/Quote') > -1 && Employer"> <a href="service_category" title="{{'Purchase Quote'|translate}}" class="btn btn-default btn-lg text-uppercase navbar-btn">{{'Purchase Quote'|translate}}</a>                        </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

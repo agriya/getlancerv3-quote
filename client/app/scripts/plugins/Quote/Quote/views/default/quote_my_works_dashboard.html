@@ -1,0 +1,81 @@
+<div class="clearfix" ng-controller="quoteServicesMyWorkDashboardCtrl">
+    <div class="row">
+        <!--<div class="col-md-4 top-mspace">
+            <h3 class="no-mar">My Works</h3>
+        </div>-->
+        <div class="col-xs-12">
+            <div class="table-block">
+                <div class="table-responsive top-space-10">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <!--<th rowspan="2">{{'Service'|translate}}</th>-->
+                                <th rowspan="2">{{'Requests'|translate}}</th>
+                                <th rowspan="2">{{'Requested By'|translate}}</th>
+                                <th rowspan="2">{{'Work Location'|translate}}</th>
+                                <!--<th class="text-center" colspan="2">{{'Messages'|translate}}</th>-->
+                                <th rowspan="2" class="text-center">{{'Status'|translate}}</th>
+                                <th class="text-center" rowspan="2">{{'Quote Amount'|translate}}
+                                    <span ng-if="$root.settings.CURRENCY_SYMBOL !== ''">({{$root.settings.CURRENCY_SYMBOL}})</span>
+                                     <span ng-if="$root.settings.CURRENCY_SYMBOL === ''">({{$root.settings.CURRENCY_CODE}})</span>
+                                </th>
+                                <th rowspan="2" width="100" class='text-center'>{{'Action'|translate}}</th>
+                            </tr>
+                            <!-- <tr>
+                                <th>{{'Unread'|translate}}</th>
+                                <th>{{'All'|translate}}</th>
+                            </tr>-->
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat='quote_my_work in quote_my_works'>
+                                <!--<td>
+                                    <div> <a href="quote_service/{{quote_my_work.quote_service.id}}/{{quote_my_work.quote_service.business_name  | slugify}}" title="{{quote_my_work.quote_service.business_name}}">{{quote_my_work.quote_service.business_name}}</a>                                        </div>
+                                </td>-->
+                                <td>{{quote_my_work.quote_request.title}}</td>
+                                <td>
+                                    <div> <a ui-sref="user_profile({id:quote_my_work.user.id,slug: quote_my_work.user.username})"
+                                            title="{{quote_my_work.user.username}}">{{quote_my_work.user.username}}</a>                                        </div>
+                                </td>
+                                <!-- <td> {{quote_my_work.provider_unread_message_count}} </td>
+                                <td> {{quote_my_work.provider_received_message_count}} </td>-->
+                                <td> <span>
+                            <i class="flag-icon flag-icon-{{quote_my_work.quote_service.country.iso_alpha2 | lowercase}}"> </i> {{quote_my_work.quote_service.address}}
+                            </span> </td>
+                                <td class="text-center">{{quote_my_work.quote_status.name}}</td>
+                                <td class="text-center">{{quote_my_work.quote_amount ? quote_my_work.quote_amount : 0 }}
+                                </td>
+                                <td>
+                                    <!--<quote-dashboar-work-action quoteid="{{quote_my_work.quote_request.id}}"> </quote-dashboar-work-action>-->
+                                    <div class="dropdown"> <button class="request-btn btn btn-primary dropdown-toggle" type="button" id="dropdownMenu4"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Action <i class="fa fa-angle-down fa-fw" aria-hidden="true"></i> </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <!--payment pending-->
+                                            <li><a href="my_works/all/{{quote_my_work.quote_status.id}}/{{quote_my_work.quote_status.name | slugify}}/{{quote_my_work.id}}">
+                                                <i class="fa fa-share-square-o fa-fw"></i> {{'Send'|translate}} / {{'View Quote'|translate}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-if="!quote_my_works.length && !loader" class="text-center">
+                                <td colspan="6"> <span>
+                                    <span class="text-danger">{{'No records available'|translate}}</span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="quote_my_works.length" class="text-center big-mspace">
+                        <a href="my_works" title="{{'Manage Works'|translate}}" class="btn btn-primary">{{'Manage Works'|translate}}</a>
+                    </div>
+                    
+                    <div ng-if="!quote_my_works.length && loader" class="text-center">
+                        <span>
+                            <img ng-src="images/contest_loader.gif" alt="loading " title="loading">
+                        </span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

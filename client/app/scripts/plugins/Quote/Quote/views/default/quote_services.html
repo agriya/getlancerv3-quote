@@ -1,0 +1,44 @@
+<div class="section">
+    <div class="container">
+        <div class="text-center howHead no-pad browse-services">
+            <h3 class="text-uppercase text-24 top-mspace big-space ng-binding Montserrat">{{'Browse'| translate}} <span class="text-primary ng-binding">{{'Services' | translate}}</span></h3>
+        </div>
+    </div>
+</div>
+<div class="howitWork featuerdEquip Service-list" ng-controller='QuoteServicesController'>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-3 browse-service-list" ng-repeat="quote_service in quote_services">
+                <div class="panel howitBlocks qutoesBlock service-menu">
+                    <div class="quote-img">
+                        <div class="img-edit-block">
+                        <a href="javascript:void(0)" class="center-block show feutrimgCont" title="{{quote_service.business_name}}">
+                            <img ng-src="{{quote_service.image_name}}" alt="{{quote_service.business_name}}" class="img-responsive center-block" title="{{quote_service.business_name}}" ng-click="openQuoteRequestModal('null',quote_service.id,'service')">
+                        </a> 
+                        </div>
+                        <h3 class="text-18 no-mar"> 
+                            <a href="javascript:void(0)" title="{{quote_service.business_name}}" class="text-gray htruncate">
+                            <span ng-click="openQuoteRequestModal('null',quote_service.id,'service')">{{quote_service.business_name}}</span>
+                            </a>
+                       </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row binding-pagination">
+            <div class="pagnation-content">
+                <div class="container">
+                    <div class="clearfix pagnation-inner" ng-hide="!quote_services.length">
+                        <uib-pagination total-items="totalItems" max-size="maxSize" items-per-page="itemsPerPage" ng-model="currentPage" class="pagination-sm" boundary-links="true" num-pages="noOfPages" ng-click="paginate_quote_services()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 ver-mspace">
+              <div ng-show="!quote_services.length && loader"> <img src="images/Loading_icon.gif" class="img-responsive center-block" id="loading"> </div>
+            <div  ng-show="!loader && !quote_services.length">
+                <p class="text-center">{{'No records available'|translate}}</p>
+            </div>
+        </div>
+    </div>
+</div>
