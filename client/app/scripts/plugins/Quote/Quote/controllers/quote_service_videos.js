@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp.Quote')
-    .controller('QuoteServiceVideosManageController', ['$window', '$rootScope', '$scope', '$http', '$stateParams', '$state', 'flash', 'md5', '$filter', '$uibModal', '$location', 'QuoteServiceFactory', 'QuoteServiceVideosFactory', 'QuoteServiceVideoFactory', 'QuoteServiceQuoteVideosFactory','$timeout', 'SweetAlert', function($window, $rootScope, $scope, $http, $stateParams, $state, flash, md5, $filter, $uibModal, $location, QuoteServiceFactory, QuoteServiceVideosFactory, QuoteServiceVideoFactory, QuoteServiceQuoteVideosFactory, $timeout, SweetAlert) {
+    .controller('QuoteServiceVideosManageController', ['$window', '$rootScope', '$scope', '$http', '$stateParams', '$state', 'flash', 'md5', '$filter', '$uibModal', '$location', 'QuoteServiceFactory', 'QuoteServiceVideosFactory', 'QuoteServiceVideoFactory', 'QuoteServiceQuoteVideosFactory','$timeout', function($window, $rootScope, $scope, $http, $stateParams, $state, flash, md5, $filter, $uibModal, $location, QuoteServiceFactory, QuoteServiceVideosFactory, QuoteServiceVideoFactory, QuoteServiceQuoteVideosFactory, $timeout) {
          var url = $location.absUrl();
         if ($stateParams.quoteServiceId !== null) {
             $scope.url_split = $location.path().split("/")[1];
@@ -42,7 +42,7 @@ angular.module('getlancerApp.Quote')
             });
               $scope.setQuoteActive = function (){
                      var flashMessage = "";
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to active this service?"),
                         type: "warning",
                         showCancelButton: true,
@@ -51,7 +51,7 @@ angular.module('getlancerApp.Quote')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var params = {};
                              params.is_active = 1;
@@ -73,8 +73,8 @@ angular.module('getlancerApp.Quote')
           };
         };
         $scope.QuoteVideoDelete = function(id) {
-            var flashMessage = "";
-            SweetAlert.swal({
+                var flashMessage = "";
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to delete?"),
                         type: "warning",
                         showCancelButton: true,
@@ -83,7 +83,7 @@ angular.module('getlancerApp.Quote')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var param = {};
                               param.quoteServiceVideoId = id;

@@ -15,7 +15,7 @@ angular.module('getlancerApp')
         };
     })
     
-    .controller('quoteServicesMyServicesDashboardCtrl', function($rootScope, $scope, QuoteServicesMeFactory, md5, $window, QuoteServicesStatusFactory, QuoteServiceFactory, $filter, flash, SweetAlert, $state, Slug) { 
+    .controller('quoteServicesMyServicesDashboardCtrl', function($rootScope, $scope, QuoteServicesMeFactory, md5, $window, QuoteServicesStatusFactory, QuoteServiceFactory, $filter, flash, $state, Slug) { 
         $scope.my_services = true;
         //  $scope.quote_services_user = [];
         $scope.pageChangedService = function(page) {
@@ -119,7 +119,7 @@ angular.module('getlancerApp')
         var flashMessage ={};
            $scope.deleteService = function(serviceid) {
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -128,7 +128,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation:false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.quoteServiceId = serviceid;
@@ -261,7 +261,7 @@ angular.module('getlancerApp')
             controller: 'quoteServicesMyRequestDashboardCtrl'
         };
     })
-    .controller('quoteServicesMyRequestDashboardCtrl', function($rootScope, QuoteRequestUserFactory, md5, $window, ConstType, ConstQuoteStatuses, $scope, $state, QuoteRequestStatusFactory, QuoteRequestFactory,$filter, flash, SweetAlert, Slug) {
+    .controller('quoteServicesMyRequestDashboardCtrl', function($rootScope, QuoteRequestUserFactory, md5, $window, ConstType, ConstQuoteStatuses, $scope, $state, QuoteRequestStatusFactory, QuoteRequestFactory,$filter, flash, Slug) {
         $scope.ConstType = ConstType;
         $scope.ConstQuoteStatuses = ConstQuoteStatuses;
         $scope.my_request = true;
@@ -300,7 +300,7 @@ angular.module('getlancerApp')
   var flashMessage ={};
           $scope.setArchived = function(archiveid) {
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to archive this request?"),
                     type: "warning",
                     showCancelButton: true,
@@ -309,7 +309,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation:false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.quoteRequestId = archiveid;
@@ -333,7 +333,7 @@ angular.module('getlancerApp')
 
          $scope.setUnArchived = function(archiveid) {
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to Unarchive this request?"),
                     type: "warning",
                     showCancelButton: true,
@@ -342,7 +342,7 @@ angular.module('getlancerApp')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation:false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.quoteRequestId = archiveid;

@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp.Quote')
-    .controller('QuoteRequestViewController', ['$window', '$rootScope', '$scope', '$http', '$stateParams', '$state', 'flash', 'md5', '$filter', '$uibModal', '$uibModalStack', '$location', 'QuoteRequestQuoteBidsFactory', 'QuoteServiceFactory', 'moment', 'ConstQuoteStatuses', 'QuoteServiceFaqAnswersFactory', 'MessagesFactory', 'QuoteBidFactory', 'ConstPayToEscrow', 'ConstQuoteBuyOption', 'anchorSmoothScroll', 'QuoteServiceQuotePhotosFactory', 'QuoteServiceQuoteVideosFactory', 'QuoteMeRequestsFactory','SweetAlert', function ($window, $rootScope, $scope, $http, $stateParams, $state, flash, md5, $filter, $uibModal, $uibModalStack, $location, QuoteRequestQuoteBidsFactory, QuoteServiceFactory, moment, ConstQuoteStatuses, QuoteServiceFaqAnswersFactory, MessagesFactory, QuoteBidFactory, ConstPayToEscrow, ConstQuoteBuyOption, anchorSmoothScroll, QuoteServiceQuotePhotosFactory, QuoteServiceQuoteVideosFactory, QuoteMeRequestsFactory, SweetAlert) {
+    .controller('QuoteRequestViewController', ['$window', '$rootScope', '$scope', '$http', '$stateParams', '$state', 'flash', 'md5', '$filter', '$uibModal', '$uibModalStack', '$location', 'QuoteRequestQuoteBidsFactory', 'QuoteServiceFactory', 'moment', 'ConstQuoteStatuses', 'QuoteServiceFaqAnswersFactory', 'MessagesFactory', 'QuoteBidFactory', 'ConstPayToEscrow', 'ConstQuoteBuyOption', 'anchorSmoothScroll', 'QuoteServiceQuotePhotosFactory', 'QuoteServiceQuoteVideosFactory', 'QuoteMeRequestsFactory', function ($window, $rootScope, $scope, $http, $stateParams, $state, flash, md5, $filter, $uibModal, $uibModalStack, $location, QuoteRequestQuoteBidsFactory, QuoteServiceFactory, moment, ConstQuoteStatuses, QuoteServiceFaqAnswersFactory, MessagesFactory, QuoteBidFactory, ConstPayToEscrow, ConstQuoteBuyOption, anchorSmoothScroll, QuoteServiceQuotePhotosFactory, QuoteServiceQuoteVideosFactory, QuoteMeRequestsFactory) {
         $rootScope.header = $rootScope.settings.SITE_NAME + ' | ' + $filter("translate")("My Requests");
         $scope.loadPage = 1;
         $scope.MessagePage = 1;
@@ -354,7 +354,7 @@ angular.module('getlancerApp.Quote')
             });
         }
         $scope.setHired = function (id) {
-            SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to change the status to Hire?"),
                         type: "warning",
                         showCancelButton: true,
@@ -363,7 +363,7 @@ angular.module('getlancerApp.Quote')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var params = {};
                             params.quote_status_id = ConstQuoteStatuses.Hired;
@@ -385,7 +385,7 @@ angular.module('getlancerApp.Quote')
                     });
         }
         $scope.setAsClosed = function (id) {
-            SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to change the change status to Close?"),
                         type: "warning",
                         showCancelButton: true,
@@ -394,7 +394,7 @@ angular.module('getlancerApp.Quote')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var params = {};
                             params.quote_status_id = ConstQuoteStatuses.Closed;

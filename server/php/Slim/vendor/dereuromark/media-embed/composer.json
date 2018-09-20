@@ -1,0 +1,37 @@
+{
+	"name": "dereuromark/media-embed",
+	"description": "A PHP library to deal with all those media services around, parsing their URLs and embedding their audio/video content in websites.",
+	"keywords": ["media", "embed", "PHP", "iframe", "video", "audio"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Mark Scherer",
+			"role": "Author",
+			"homepage": "http://www.dereuromark.de"
+		}
+	],
+	"require": {
+		"php": ">=5.6",
+		"jbroadway/urlify": "^1.0.0"
+	},
+	"require-dev":{
+		"fig-r/psr2r-sniffer": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"MediaEmbed\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"MediaEmbed\\Test\\": "tests/"
+		}
+	},
+	"scripts": {
+		"test": "php phpunit.phar",
+		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
+		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit.phar || true",
+		"cs-check": "phpcs -v -p --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --extensions=php --ignore=tests/test_files/ src/ tests/",
+		"cs-fix": "phpcbf -v --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --extensions=php --ignore=tests/test_files/ src/ tests/"
+	}
+}

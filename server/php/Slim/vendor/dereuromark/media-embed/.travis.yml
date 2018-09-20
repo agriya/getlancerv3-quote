@@ -1,0 +1,27 @@
+language: php
+
+sudo: false
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+
+matrix:
+  fast_finish: true
+
+  include:
+    - php: 7.1
+      env: PHPCS=1 DEFAULT=0
+
+before_script:
+  - composer install --prefer-dist --no-interaction
+  - if [[ $PHPCS != 1 ]]; then composer require phpunit/phpunit:"^5.0|^6.0|^7.0"; fi
+
+script:
+  - if [[ $PHPCS != 1 ]]; then vendor/bin/phpunit ; fi
+  - if [[ $PHPCS == 1 ]]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/fig-r/psr2r-sniffer/PSR2R/ruleset.xml --ignore=tests/test_files/ src/ tests/ ; fi
+
+notifications:
+  email: false

@@ -269,13 +269,13 @@ $app->PUT('/api/v1/quote_bids/{quoteBidId}', function ($request, $response, $arg
                     '##FREELANCER##' => $userDetails->username,
                     '##EMPLOYER##' => $quoteBids->user->username,
                     '##REQUEST_NAME##' => $quoteBids->quote_request->title,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
                 );
                 if ($quoteBids->quote_status_id == \Constants\QuoteStatus::Hired) {
                     $template = 'Hired Notification';
                 } else {
-                    Models\User::where('id', $quoteBids->service_provider_user_id)->update(['available_wallet_amount' => $userDetails->available_wallet_amount + ($quoteBids->quote_amount)]);                    
-                    insertTransaction($quoteBids->service_provider_user_id, $quoteBids->user_id, $quoteBids->id, 'QuoteBid', \Constants\TransactionType::QuoteSubscriptionPlan, \Constants\PaymentGateways::Wallet, $quoteBids->quote_amount, 0, 0, 0, 0, $quoteBids->id, 0);                   
+                    /*Models\User::where('id', $quoteBids->service_provider_user_id)->update(['available_wallet_amount' => $userDetails->available_wallet_amount + ($quoteBids->quote_amount)]);                    
+                    insertTransaction($quoteBids->service_provider_user_id, $quoteBids->user_id, $quoteBids->id, 'QuoteBid', \Constants\TransactionType::QuoteSubscriptionPlan, \Constants\PaymentGateways::Wallet, $quoteBids->quote_amount, 0, 0, 0, 0, $quoteBids->id, 0);*/                   
                     $template = 'Work Closed Notification';
                 }
                 sendMail($template, $emailFindReplace, $userDetails->email);
@@ -298,7 +298,7 @@ $app->PUT('/api/v1/quote_bids/{quoteBidId}', function ($request, $response, $arg
                     '##CATEGORY_NAME##' => $quoteBids->quote_request->quote_category->name,
                     '##BUSINESS_NAME##' => $quoteBids->quote_service->business_name,
                     '##PAYMENT_NOTE##' => $quoteBids->price_note,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
                 );
                 sendMail('Quote Received Notification', $emailFindReplace, $employerDetails->email);
             } elseif (!empty($args['quote_status_id']) && (($quoteBids->quote_status_id == \Constants\QuoteStatus::UnderDiscussion && $quoteBids->is_show_bid_to_requestor == 1) || $quoteBids->quote_status_id == \Constants\QuoteStatus::Completed)) {
@@ -318,7 +318,7 @@ $app->PUT('/api/v1/quote_bids/{quoteBidId}', function ($request, $response, $arg
                     '##REQUEST_NAME##' => $quoteBids->quote_request->title,
                     '##QUOTE_AMOUNT##' => $quoteBids->quote_amount,
                     '##PRICE_TYPE##' => $quoteType,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
                 );
                 if ($quoteBids->quote_status_id == \Constants\QuoteStatus::UnderDiscussion) {
                     $template = 'Quote Updated Notification';
@@ -335,7 +335,7 @@ $app->PUT('/api/v1/quote_bids/{quoteBidId}', function ($request, $response, $arg
                     '##FREELANCER##' => ucfirst($userDetails->username) ,
                     '##EMPLOYER##' => ucfirst($employerDetails->username) ,
                     '##REQUEST_NAME##' => $quoteBids->quote_request->title,
-                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
+                    '##RESPONSE_URL##' => $_server_domain_url . '/my_works/all/' . $quoteBids->quote_status_id . '/' . $quoteStatusName . '/' . $quoteBids->id
                 );
                 sendMail('Work Incomplete Notification', $emailFindReplace, $employerDetails->email);                
             }

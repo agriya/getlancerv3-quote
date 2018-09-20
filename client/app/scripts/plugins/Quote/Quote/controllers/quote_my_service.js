@@ -6,7 +6,7 @@
  * # quoteMyServicesCtrl
  */
 angular.module('getlancerApp.Quote')
-    .controller('quoteMyServicesCtrl', function($rootScope, $scope, QuoteServicesMeFactory, md5, $window, QuoteServicesStatusFactory, QuoteServiceFactory, $filter, flash, SweetAlert, $state, Slug) { 
+    .controller('quoteMyServicesCtrl', function($rootScope, $scope, QuoteServicesMeFactory, md5, $window, QuoteServicesStatusFactory, QuoteServiceFactory, $filter, flash, $state, Slug) { 
         $scope.my_services = true;
          $scope.quote_services_user = [];
          $scope.index= function(){
@@ -116,7 +116,7 @@ angular.module('getlancerApp.Quote')
         var flashMessage ={};
            $scope.deleteService = function(serviceid) {
             if ($rootScope.user !== null && $rootScope.user !== undefined) {
-                SweetAlert.swal({
+                swal({ //jshint ignore:line
                     title: $filter("translate")("Are you sure you want to delete?"),
                     type: "warning",
                     showCancelButton: true,
@@ -125,7 +125,7 @@ angular.module('getlancerApp.Quote')
                     cancelButtonText: "Cancel",
                     closeOnConfirm: true,
                     animation:false,
-                }, function(isConfirm) {
+                }).then(function (isConfirm) {
                     if (isConfirm) {
                         var params = {};
                         params.quoteServiceId = serviceid;

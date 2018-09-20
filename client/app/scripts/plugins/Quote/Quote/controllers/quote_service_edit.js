@@ -7,7 +7,7 @@
  * Controller of the getlancerApp
  */
 angular.module('getlancerApp.Quote')
-    .controller('QuoteServiceEditController', ['$window', '$rootScope', '$scope', '$stateParams', 'flash', 'md5', '$filter', '$uibModal', '$location', 'QuoteServiceCategoriesFactory', 'QuoteServiceFactory', '$timeout', 'Upload', 'ConstServiceType', '$state', 'QuoteAutocompleteUsers', 'ConstUserRole','SweetAlert', function($window, $rootScope, $scope, $stateParams, flash, md5, $filter, $uibModal, $location, QuoteServiceCategoriesFactory, QuoteServiceFactory, $timeout, Upload, ConstServiceType, $state, QuoteAutocompleteUsers, ConstUserRole, SweetAlert) {
+    .controller('QuoteServiceEditController', ['$window', '$rootScope', '$scope', '$stateParams', 'flash', 'md5', '$filter', '$uibModal', '$location', 'QuoteServiceCategoriesFactory', 'QuoteServiceFactory', '$timeout', 'Upload', 'ConstServiceType', '$state', 'QuoteAutocompleteUsers', 'ConstUserRole', function($window, $rootScope, $scope, $stateParams, flash, md5, $filter, $uibModal, $location, QuoteServiceCategoriesFactory, QuoteServiceFactory, $timeout, Upload, ConstServiceType, $state, QuoteAutocompleteUsers, ConstUserRole) {
         $scope.site_url = '/ag-admin/#/quote_services/list';
         $scope.quote_edit_id =  $stateParams.id;
        var url = $location.absUrl();
@@ -132,7 +132,7 @@ angular.module('getlancerApp.Quote')
             $scope.loader = false;
                 $scope.setQuoteActive = function (){
                     var flashMessage = "";
-                    SweetAlert.swal({
+                    swal({ //jshint ignore:line
                         title: $filter("translate")("Are you sure you want to active this service?"),
                         type: "warning",
                         showCancelButton: true,
@@ -141,7 +141,7 @@ angular.module('getlancerApp.Quote')
                         cancelButtonText: "Cancel",
                         closeOnConfirm: true,
                         animation:false,
-                    }, function (isConfirm) {
+                    }).then(function (isConfirm) {
                         if (isConfirm) {
                             var params = {};
                              params.is_active = 1;
